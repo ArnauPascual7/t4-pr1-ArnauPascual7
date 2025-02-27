@@ -30,6 +30,11 @@ body {
   text-align: start;
 }
 
+#main-title {
+    color: darkcyan;
+    font-weight: bold;
+}
+
 #main-image {
     margin: 25px
 }
