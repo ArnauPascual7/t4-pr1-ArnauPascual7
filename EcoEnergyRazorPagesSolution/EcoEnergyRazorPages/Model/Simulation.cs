@@ -9,7 +9,7 @@
         public DateTime Date { get; set; }
         public SystemType SysType { get; set; }
         public double ConfigPar { get; set; }
-        public float Ratio { get; set; }
+        public double Ratio { get; set; }
         public double EnergyGen { get; set; }
         public decimal KWHCost { get; set; }
         public decimal KWHPrice { get; set; }
