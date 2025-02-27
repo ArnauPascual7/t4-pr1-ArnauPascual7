@@ -38,3 +38,11 @@ body {
 #main-image {
     margin: 25px
 }
+
+.page-green {
+    color: darkgreen
+}
+
+.page-cyan {
+    color: darkcyan;
+}
