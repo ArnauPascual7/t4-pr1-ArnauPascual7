@@ -1,0 +1,40 @@
+﻿@page
+@model EcoEnergyRazorPages.Pages.AddSimulationModel
+@{
+	ViewData["Title"] = "Afegir Simulació";
+}
+
+<div>
+	<div class="text-center"><h1 class="display-4">Afegir Simulació</h1></div>
+	<form action="" method="post">
+		<div class="form-group">
+			<input type="radio" id="input-solar-system" name="system-type" value="1">
+			<label for="input-solar-system">Sistema Solar</label><br>
+			<input type="radio" id="input-wind-system" name="system-type" value="2">
+			<label for="input-wind-system">Sistema Eòlic</label><br>
+			<input type="radio" id="input-hydroelectric-system" name="system-type" value="3">
+			<label for="input-hydroelectric-system">Sistema Hidroelèctric</label><br>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewSimulation.ConfigPar"></label>
+			<input class="form-control" asp-for="NewSimulation.ConfigPar" />
+			<span asp-validation-for="NewSimulation.ConfigPar" class="alert-dark"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewSimulation.Ratio"></label>
+			<input class="form-control" asp-for="NewSimulation.Ratio" />
+			<span asp-validation-for="NewSimulation.Ratio" class="alert-dark"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewSimulation.KWHCost"></label>
+			<input class="form-control" asp-for="NewSimulation.KWHCost" />
+			<span asp-validation-for="NewSimulation.KWHCost" class="alert-dark"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewSimulation.KWHPrice"></label>
+			<input class="form-control" asp-for="NewSimulation.KWHPrice" />
+			<span asp-validation-for="NewSimulation.KWHPrice" class="alert-dark"></span>
+		</div>
+		<button type="submit" class="btn btn-primary">Afegir</button>
+	</form>
+</div>

@@ -15,5 +15,10 @@
         public decimal KWHPrice { get; set; }
         public decimal TotalCost { get; set; }
         public decimal TotalPrice { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Date},{SysType},{ConfigPar},{Ratio},{EnergyGen},{KWHCost},{KWHPrice},{TotalCost},{TotalPrice}";
+        }
     }
 }
