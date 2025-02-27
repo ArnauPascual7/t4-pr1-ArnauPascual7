@@ -1,0 +1,64 @@
+﻿@page
+@model EcoEnergyRazorPages.Pages.SimulationsModel
+@{
+	ViewData["Title"] = "Simulacions";
+}
+
+<div>
+	<div class="text-center"><h1 class="display-4">Simulacions</h1></div>
+	<p>@Model.MsgFileError</p>
+	@if (Model.Simulations.Any())
+	{
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Data/Hora</td>
+					<td>Tipus de Simulació</td>
+					<td>Paràmetre Configurat</td>
+					<td>Rati</td>
+					<td>Energia Generada</td>
+					<td>Cost kWh</td>
+					<td>Preu kWh</td>
+					<td>Cost Total</td>
+					<td>Preu Total</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sim in Model.Simulations)
+				{
+					<tr>
+						<td>@sim.Date</td>
+						@if ((int)sim.SysType == 1)
+						{
+							<td>Sistema Solar</td>
+						}
+						else if ((int)sim.SysType == 2)
+						{
+							<td>Sistema Eòlic</td>
+						}
+						else if ((int)sim.SysType == 3)
+						{
+							<td>Sistema Hidroelèctric</td>
+						}
+						else
+						{
+							<td>Sistema desconegut</td>
+						}
+						<td>@sim.ConfigPar</td>
+						<td>@sim.Ratio</td>
+						<td>@sim.EnergyGen</td>
+						<td>@sim.KWHCost</td>
+						<td>@sim.KWHPrice</td>
+						<td>@sim.TotalCost</td>
+						<td>@sim.TotalPrice</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<p>Quantitat de registres: @Model.Simulations.Count()</p>
+	} else
+	{
+		<h3>No hi ha simulacions</h3>
+	}
+	<a class="btn btn-primary" asp-page="\Simulations">Afegir Simulació</a>
+</div>
