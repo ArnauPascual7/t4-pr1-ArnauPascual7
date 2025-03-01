@@ -13,6 +13,7 @@ namespace EcoEnergyRazorPages.Pages
     public class AddSimulationModel : PageModel
     {
         public string MsgFileError;
+        public string MsgConfigParError;
         [BindProperty]
         public Simulation NewSimulation { get; set; }
         public List<SelectListItem> Systems { get; set; } =
@@ -31,6 +32,25 @@ namespace EcoEnergyRazorPages.Pages
             string filePath = @"ModelData\" + fileName;
             Debug.WriteLine("Simulations CSV File Path --> " + Path.GetFullPath(filePath));
             NewSimulation.SetSystemType(systemtype);
+            if (!NewSimulation.ValidConfigPar())
+            {
+                switch(NewSimulation.SysType)
+                {
+                    case SystemType.SolarSystem:
+                        MsgConfigParError = "El paràmetre configurat ha de ser major que 1";
+                        break;
+                    case SystemType.WindSystem:
+                        MsgConfigParError = "El paràmetre configurat ha de ser mínim 5";
+                        break;
+                    case SystemType.HydroelectricSystem:
+                        MsgConfigParError = "El paràmetre configurat ha de ser mínim 20";
+                        break;
+                    default:
+                        MsgConfigParError = "El paràmetre configurat no és correcte";
+                        break;
+                }
+                return Page();
+            }
             NewSimulation.SetSimulationCalculations();
             Debug.WriteLine("New Simulation --> " + NewSimulation.ToString());
             if (SysIO.File.Exists(filePath))

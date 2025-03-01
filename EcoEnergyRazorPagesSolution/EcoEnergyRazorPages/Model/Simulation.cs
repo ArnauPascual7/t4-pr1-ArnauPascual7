@@ -1,4 +1,6 @@
-﻿namespace EcoEnergyRazorPages.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EcoEnergyRazorPages.Model
 {
     public enum SystemType
     {
@@ -8,10 +10,15 @@
     {
         public DateTime Date { get; set; } = DateTime.Now;
         public SystemType SysType { get; set; }
+        [Required(ErrorMessage = "Aquest camp és obligatori")]
         public double ConfigPar { get; set; }
+        [Required(ErrorMessage = "Aquest camp és obligatori")]
+        [Range(0,3, ErrorMessage = "El camp Rati ha de ser entre 0 i 3")]
         public double Ratio { get; set; }
         public double EnergyGen { get; set; }
+        [Required(ErrorMessage = "Aquest camp és obligatori")]
         public decimal KWHCost { get; set; }
+        [Required(ErrorMessage = "Aquest camp és obligatori")]
         public decimal KWHPrice { get; set; }
         public decimal TotalCost { get; set; }
         public decimal TotalPrice { get; set; }
@@ -33,22 +40,6 @@
                     EnergyGen = 0;
                     break;
             }
-            /*if (SysType is SystemType.SolarSystem)
-            {
-                EnergyGen = ConfigPar * Ratio;
-            }
-            else if (SysType is SystemType.WindSystem)
-            {
-                EnergyGen = Math.Pow(ConfigPar, 3) * Ratio;
-            }
-            else if (SysType is SystemType.HydroelectricSystem)
-            {
-                EnergyGen = ConfigPar * 9.8 * Ratio;
-            }
-            else
-            {
-                EnergyGen = 0;
-            }*/
             TotalCost = KWHCost * (decimal)EnergyGen;
             TotalPrice = KWHPrice * (decimal)EnergyGen;
         }
@@ -69,6 +60,21 @@
                 default:
                     SysType = 0;
                     break;
+            }
+        }
+
+        public bool ValidConfigPar()
+        {
+            switch (SysType)
+            {
+                case SystemType.SolarSystem:
+                    return ConfigPar > 1;
+                case SystemType.WindSystem:
+                    return ConfigPar >= 5;
+                case SystemType.HydroelectricSystem:
+                    return ConfigPar >= 20;
+                default:
+                    return false;
             }
         }
 
