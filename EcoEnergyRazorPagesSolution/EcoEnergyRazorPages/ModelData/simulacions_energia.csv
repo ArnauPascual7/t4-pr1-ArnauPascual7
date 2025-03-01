@@ -1,2 +1,4 @@
 Date,SysType,ConfigPar,Ratio,EnergyGen,KWHCost,KWHPrice,TotalCost,TotalPrice
 10/10/2010,SolarSystem,1,2,3,4,5,6,7
+03/01/2025 16:55:58,HydroelectricSystem,4,4,0,4,4,0,0
+03/01/2025 16:58:09,WindSystem,2,2,16,2,2,32,32
