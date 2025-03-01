@@ -1,6 +1,7 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using EcoEnergyRazorPages.Model;
+using EcoEnergyRazorPages.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -30,7 +31,7 @@ namespace EcoEnergyRazorPages.Pages
             }
             string fileName = "simulacions_energia.csv";
             string filePath = @"ModelData\" + fileName;
-            Debug.WriteLine("Simulations CSV File Path --> " + Path.GetFullPath(filePath));
+            //Debug.WriteLine("Simulations CSV File Path --> " + Path.GetFullPath(filePath));
             NewSimulation.SetSystemType(systemtype);
             if (!NewSimulation.ValidConfigPar())
             {
@@ -52,17 +53,18 @@ namespace EcoEnergyRazorPages.Pages
                 return Page();
             }
             NewSimulation.SetSimulationCalculations();
-            Debug.WriteLine("New Simulation --> " + NewSimulation.ToString());
+            Debug.WriteLine("?: New Simulation --> " + NewSimulation.ToString());
             if (SysIO.File.Exists(filePath))
             {
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                FilesHelper.WriteCsv(filePath, NewSimulation);
+                /*var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
                     HasHeaderRecord = false
                 };
                 using var stream = SysIO.File.Open(filePath, FileMode.Append);
                 using var writer = new StreamWriter(stream);
                 using var csvWriter = new CsvWriter(writer, config);
-                csvWriter.WriteRecord(NewSimulation);
+                csvWriter.WriteRecord(NewSimulation);*/
             }
             else
             {

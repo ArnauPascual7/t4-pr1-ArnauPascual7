@@ -7,3 +7,5 @@ Date,SysType,ConfigPar,Ratio,EnergyGen,KWHCost,KWHPrice,TotalCost,TotalPrice
 03/01/2025 17:15:37,HydroelectricSystem,20,2,392,2,2,784,784
 03/01/2025 17:33:50,SolarSystem,2,2,4,2,2,8,8
 03/01/2025 17:35:41,WindSystem,5,2,250,5,5,1250,1250
+03/01/2025 18:05:31,SolarSystem,2,2,4,2,2,8,8
+03/01/2025 18:07:53,WindSystem,7,3,1029,7,7,7203,7203
