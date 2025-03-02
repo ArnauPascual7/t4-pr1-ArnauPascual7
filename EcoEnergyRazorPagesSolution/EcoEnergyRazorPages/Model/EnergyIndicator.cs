@@ -1,6 +1,6 @@
 ﻿namespace EcoEnergyRazorPages.Model
 {
-    public class EnergyIndicator
+    public class EnergyIndicator : IComparable<EnergyIndicator>
     {
         public DateOnly Data { get; set; }
         public float PBEE_Hidroelectr { get; set; }
@@ -42,5 +42,11 @@
         public float DGGN_ConsumGNCentrTerm { get; set; }
         public float CCAC_GasolinaAuto { get; set; }
         public float CCAC_GasoilA { get; set; }
+
+        public int CompareTo(EnergyIndicator? other)
+        {
+            if (other == null) return 1;
+            return this.Data.CompareTo(other.Data);
+        }
     }
 }

@@ -73,9 +73,207 @@
 			</tbody>
 		</table>
 		<p>Quantitat de registres: @Model.EnergyIndicators.Count()</p>
+		<h3>Estadísitiques</h3>
+		<h4>Registres amb producció neta superior a 3000</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					@foreach (string title in header)
+					{
+						<td>@title</td>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var indicator in Model.NetProductionIndicators)
+				{
+					<tr>
+						<td>@indicator.Data</td>
+						<td>@indicator.PBEE_Hidroelectr</td>
+						<td>@indicator.PBEE_Carbo</td>
+						<td>@indicator.PBEE_GasNat</td>
+						<td>@indicator.PBEE_FuelOil</td>
+						<td>@indicator.PBEE_CiclComb</td>
+						<td>@indicator.PBEE_Nuclear</td>
+						<td>@indicator.CDEEBC_ProdBruta</td>
+						<td>@indicator.CDEEBC_ConsumAux</td>
+						<td>@indicator.CDEEBC_ProdNeta</td>
+						<td>@indicator.CDEEBC_ConsumBomb</td>
+						<td>@indicator.CDEEBC_ProdDisp</td>
+						<td>@indicator.CDEEBC_TotVendesXarxaCentral</td>
+						<td>@indicator.CDEEBC_SaldoIntercanviElectr</td>
+						<td>@indicator.CDEEBC_DemandaElectr</td>
+						<td>@indicator.CDEEBC_TotalEBCMercatRegulat</td>
+						<td>@indicator.CDEEBC_TotalEBCMercatLliure</td>
+						<td>@indicator.FEE_Industria</td>
+						<td>@indicator.FEE_Terciari</td>
+						<td>@indicator.FEE_Domestic</td>
+						<td>@indicator.FEE_Primari</td>
+						<td>@indicator.FEE_Energetic</td>
+						<td>@indicator.FEEI_ConsObrPub</td>
+						<td>@indicator.FEEI_SiderFoneria</td>
+						<td>@indicator.FEEI_Metalurgia</td>
+						<td>@indicator.FEEI_IndusVidre</td>
+						<td>@indicator.FEEI_CimentsCalGuix</td>
+						<td>@indicator.FEEI_AltresMatConstr</td>
+						<td>@indicator.FEEI_QuimPetroquim</td>
+						<td>@indicator.FEEI_ConstrMedTrans</td>
+						<td>@indicator.FEEI_RestaTransforMetal</td>
+						<td>@indicator.FEEI_AlimBegudaTabac</td>
+						<td>@indicator.FEEI_TextilConfecCuirCalçat</td>
+						<td>@indicator.FEEI_PastaPaperCartro</td>
+						<td>@indicator.FEEI_AltresIndus</td>
+						<td>@indicator.DGGN_PuntFrontEnagas</td>
+						<td>@indicator.DGGN_DistrAlimGNL</td>
+						<td>@indicator.DGGN_ConsumGNCentrTerm</td>
+						<td>@indicator.CCAC_GasolinaAuto</td>
+						<td>@indicator.CCAC_GasoilA</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<p>Quantitat de registres: @Model.NetProductionIndicators.Count()</p>
+		<h4>Mitjana de producció neta de cada any</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Any</td>
+					<td>Mitjana de producció</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var indicator in Model.AverageNetProductionForEachYearIndicators)
+				{
+					<tr>
+							<td>@indicator.Key</td>
+							<td>@indicator.Value</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<p>Quantitat de registres: @Model.AverageNetProductionForEachYearIndicators.Count()</p>
+		<h4>Registres amb consum de gasolina superior a 100</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					@foreach (string title in header)
+					{
+						<td>@title</td>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var indicator in Model.GasolineConsumptionIndicators)
+				{
+					<tr>
+						<td>@indicator.Data</td>
+						<td>@indicator.PBEE_Hidroelectr</td>
+						<td>@indicator.PBEE_Carbo</td>
+						<td>@indicator.PBEE_GasNat</td>
+						<td>@indicator.PBEE_FuelOil</td>
+						<td>@indicator.PBEE_CiclComb</td>
+						<td>@indicator.PBEE_Nuclear</td>
+						<td>@indicator.CDEEBC_ProdBruta</td>
+						<td>@indicator.CDEEBC_ConsumAux</td>
+						<td>@indicator.CDEEBC_ProdNeta</td>
+						<td>@indicator.CDEEBC_ConsumBomb</td>
+						<td>@indicator.CDEEBC_ProdDisp</td>
+						<td>@indicator.CDEEBC_TotVendesXarxaCentral</td>
+						<td>@indicator.CDEEBC_SaldoIntercanviElectr</td>
+						<td>@indicator.CDEEBC_DemandaElectr</td>
+						<td>@indicator.CDEEBC_TotalEBCMercatRegulat</td>
+						<td>@indicator.CDEEBC_TotalEBCMercatLliure</td>
+						<td>@indicator.FEE_Industria</td>
+						<td>@indicator.FEE_Terciari</td>
+						<td>@indicator.FEE_Domestic</td>
+						<td>@indicator.FEE_Primari</td>
+						<td>@indicator.FEE_Energetic</td>
+						<td>@indicator.FEEI_ConsObrPub</td>
+						<td>@indicator.FEEI_SiderFoneria</td>
+						<td>@indicator.FEEI_Metalurgia</td>
+						<td>@indicator.FEEI_IndusVidre</td>
+						<td>@indicator.FEEI_CimentsCalGuix</td>
+						<td>@indicator.FEEI_AltresMatConstr</td>
+						<td>@indicator.FEEI_QuimPetroquim</td>
+						<td>@indicator.FEEI_ConstrMedTrans</td>
+						<td>@indicator.FEEI_RestaTransforMetal</td>
+						<td>@indicator.FEEI_AlimBegudaTabac</td>
+						<td>@indicator.FEEI_TextilConfecCuirCalçat</td>
+						<td>@indicator.FEEI_PastaPaperCartro</td>
+						<td>@indicator.FEEI_AltresIndus</td>
+						<td>@indicator.DGGN_PuntFrontEnagas</td>
+						<td>@indicator.DGGN_DistrAlimGNL</td>
+						<td>@indicator.DGGN_ConsumGNCentrTerm</td>
+						<td>@indicator.CCAC_GasolinaAuto</td>
+						<td>@indicator.CCAC_GasoilA</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<p>Quantitat de registres: @Model.GasolineConsumptionIndicators.Count()</p>
+		<h4>Registres amb demanda elèctrica superior a 4000 i producció disponible inferior a 3000</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					@foreach (string title in header)
+					{
+						<td>@title</td>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var indicator in Model.ElectricalDemandAvailableProductionIndicators)
+				{
+					<tr>
+						<td>@indicator.Data</td>
+						<td>@indicator.PBEE_Hidroelectr</td>
+						<td>@indicator.PBEE_Carbo</td>
+						<td>@indicator.PBEE_GasNat</td>
+						<td>@indicator.PBEE_FuelOil</td>
+						<td>@indicator.PBEE_CiclComb</td>
+						<td>@indicator.PBEE_Nuclear</td>
+						<td>@indicator.CDEEBC_ProdBruta</td>
+						<td>@indicator.CDEEBC_ConsumAux</td>
+						<td>@indicator.CDEEBC_ProdNeta</td>
+						<td>@indicator.CDEEBC_ConsumBomb</td>
+						<td>@indicator.CDEEBC_ProdDisp</td>
+						<td>@indicator.CDEEBC_TotVendesXarxaCentral</td>
+						<td>@indicator.CDEEBC_SaldoIntercanviElectr</td>
+						<td>@indicator.CDEEBC_DemandaElectr</td>
+						<td>@indicator.CDEEBC_TotalEBCMercatRegulat</td>
+						<td>@indicator.CDEEBC_TotalEBCMercatLliure</td>
+						<td>@indicator.FEE_Industria</td>
+						<td>@indicator.FEE_Terciari</td>
+						<td>@indicator.FEE_Domestic</td>
+						<td>@indicator.FEE_Primari</td>
+						<td>@indicator.FEE_Energetic</td>
+						<td>@indicator.FEEI_ConsObrPub</td>
+						<td>@indicator.FEEI_SiderFoneria</td>
+						<td>@indicator.FEEI_Metalurgia</td>
+						<td>@indicator.FEEI_IndusVidre</td>
+						<td>@indicator.FEEI_CimentsCalGuix</td>
+						<td>@indicator.FEEI_AltresMatConstr</td>
+						<td>@indicator.FEEI_QuimPetroquim</td>
+						<td>@indicator.FEEI_ConstrMedTrans</td>
+						<td>@indicator.FEEI_RestaTransforMetal</td>
+						<td>@indicator.FEEI_AlimBegudaTabac</td>
+						<td>@indicator.FEEI_TextilConfecCuirCalçat</td>
+						<td>@indicator.FEEI_PastaPaperCartro</td>
+						<td>@indicator.FEEI_AltresIndus</td>
+						<td>@indicator.DGGN_PuntFrontEnagas</td>
+						<td>@indicator.DGGN_DistrAlimGNL</td>
+						<td>@indicator.DGGN_ConsumGNCentrTerm</td>
+						<td>@indicator.CCAC_GasolinaAuto</td>
+						<td>@indicator.CCAC_GasoilA</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<p>Quantitat de registres: @Model.ElectricalDemandAvailableProductionIndicators.Count()</p>
 	}
 	else
 	{
 		<h3>No hi ha simulacions</h3>
 	}
 	<a class="btn btn-primary" asp-page="\EnergyIndicators">Afegir Indicador energètic</a>
+	
