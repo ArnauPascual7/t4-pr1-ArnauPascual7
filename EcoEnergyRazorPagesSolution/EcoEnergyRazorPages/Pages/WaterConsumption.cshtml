@@ -1,0 +1,48 @@
+﻿@page
+@model EcoEnergyRazorPages.Pages.WaterConsumptionModel
+@{
+	ViewData["Title"] = "Consum d'aigua";
+}
+
+<div>
+	<div class="text-center"><h1 class="display-4">Consum d'aigua</h1></div>
+	<p>@Model.MsgFileError</p>
+	@if (Model.WaterConsumptions.Any())
+	{
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Any</td>
+					<td>Codi Comarca</td>
+					<td>Comarca</td>
+					<td>Població</td>
+					<td>Domèstic xarxa</td>
+					<td>Activitats econòmiques i fonts pròpies</td>
+					<td>Total</td>
+					<td>Consum domèstic per càpita</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var water in Model.WaterConsumptions)
+				{
+					<tr>
+						<td>@water.Year</td>
+						<td>@water.CountyCode</td>
+						<td>@water.County</td>
+						<td>@water.Population</td>
+						<td>@water.DomesticNetwork</td>
+						<td>@water.EconomicActivitiesOwnSources</td>
+						<td>@water.Total</td>
+						<td>@water.HouseholdConsumptionPerCapita</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<p>Quantitat de registres: @Model.WaterConsumptions.Count()</p>
+	}
+	else
+	{
+		<h3>No hi ha registres</h3>
+	}
+	<a class="btn btn-primary" asp-page="/WaterConsumption">Afegir Simulació</a>
+</div>

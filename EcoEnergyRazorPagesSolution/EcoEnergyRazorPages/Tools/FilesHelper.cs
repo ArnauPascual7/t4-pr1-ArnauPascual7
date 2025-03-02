@@ -11,7 +11,7 @@ namespace EcoEnergyRazorPages.Tools
     {
         public static List<T> ReadCsv<T>(string filePath)
         {
-            Debug.WriteLine("?: Simulations CSV File Path --> " + Path.GetFullPath(filePath));
+            Debug.WriteLine("?: CSV File Path --> " + Path.GetFullPath(filePath));
             List<T> registers = new List<T>();
             using var reader = new StreamReader(filePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
