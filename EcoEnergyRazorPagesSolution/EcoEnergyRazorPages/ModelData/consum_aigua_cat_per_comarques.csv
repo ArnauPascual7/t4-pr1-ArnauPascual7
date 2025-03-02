@@ -1,4 +1,4 @@
-Any,Codi comarca,Comarca,Població,Domèstic xarxa,Activitats econòmiques i fonts pròpies,Total,Consum domèstic per càpita
+Year,CountyCode,County,Population,DomesticNetwork,EconomicActivitiesOwnSources,Total,HouseholdConsumptionPerCapita
 2023,1,"ALT CAMP, L'",46117,1711217,2692171,4403388,101.66
 2023,2,"ALT EMPORDÀ, L'",146552,8021123,4343524,12364647,149.95
 2023,3,"ALT PENEDÈS, L'",112638,4362371,2950711,7313082,106.11
