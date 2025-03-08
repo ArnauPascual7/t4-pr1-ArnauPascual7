@@ -8,6 +8,7 @@
 <div>
 	<div class="text-center"><h1 class="display-4">Consum d'aigua</h1></div>
 	<p>@Model.MsgFileError</p>
+	<a class="btn btn-primary" asp-page="/AddWaterConsumption">Afegir Consum d'Aigua</a>
 	@if (Model.WaterConsumptions.Any())
 	{
 		<table class="table">
@@ -96,5 +97,4 @@
 	{
 		<h3>No hi ha registres</h3>
 	}
-	<a class="btn btn-primary" asp-page="/WaterConsumption">Afegir Simulació</a>
 </div>
