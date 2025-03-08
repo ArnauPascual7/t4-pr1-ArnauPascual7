@@ -1,9 +1,1 @@
-{
-  "registers": [
-    {
-      "reg": {
-
-      }
-    }
-  ]
-}
+[{"Data":"2025-03-08","PBEE_Hidroelectr":2,"PBEE_Carbo":2,"PBEE_GasNat":2,"PBEE_FuelOil":2,"PBEE_CiclComb":2,"PBEE_Nuclear":2,"CDEEBC_ProdBruta":2,"CDEEBC_ConsumAux":2,"CDEEBC_ProdNeta":2,"CDEEBC_ConsumBomb":2,"CDEEBC_ProdDisp":2,"CDEEBC_TotVendesXarxaCentral":2,"CDEEBC_SaldoIntercanviElectr":2,"CDEEBC_DemandaElectr":2,"CDEEBC_TotalEBCMercatRegulat":"2","CDEEBC_TotalEBCMercatLliure":"2","FEE_Industria":2,"FEE_Terciari":2,"FEE_Domestic":2,"FEE_Primari":2,"FEE_Energetic":2,"FEEI_ConsObrPub":2,"FEEI_SiderFoneria":2,"FEEI_Metalurgia":2,"FEEI_IndusVidre":2,"FEEI_CimentsCalGuix":2,"FEEI_AltresMatConstr":2,"FEEI_QuimPetroquim":2,"FEEI_ConstrMedTrans":2,"FEEI_RestaTransforMetal":2,"FEEI_AlimBegudaTabac":2,"FEEI_TextilConfecCuirCal\u00E7at":2,"FEEI_PastaPaperCartro":2,"FEEI_AltresIndus":2,"DGGN_PuntFrontEnagas":2,"DGGN_DistrAlimGNL":2,"DGGN_ConsumGNCentrTerm":2,"CCAC_GasolinaAuto":2,"CCAC_GasoilA":2}]
