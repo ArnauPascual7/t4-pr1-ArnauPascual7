@@ -1,6 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <registers>
-	<reg>
-		
-	</reg>
+  <reg>
+    <Year>0</Year>
+    <CountyCode>6</CountyCode>
+    <County />
+    <Population>0</Population>
+    <DomesticNetwork>0</DomesticNetwork>
+    <EconomicActivitiesOwnSources>0</EconomicActivitiesOwnSources>
+    <Total>0</Total>
+    <HouseholdConsumptionPerCapita>0</HouseholdConsumptionPerCapita>
+  </reg>
+  <reg>
+    <Year>2025</Year>
+    <CountyCode>2</CountyCode>
+    <County>sad</County>
+    <Population>2</Population>
+    <DomesticNetwork>2</DomesticNetwork>
+    <EconomicActivitiesOwnSources>0</EconomicActivitiesOwnSources>
+    <Total>2</Total>
+    <HouseholdConsumptionPerCapita>1</HouseholdConsumptionPerCapita>
+  </reg>
+  <reg>
+    <Year>2025</Year>
+    <CountyCode>1</CountyCode>
+    <County>a</County>
+    <Population>1</Population>
+    <DomesticNetwork>1</DomesticNetwork>
+    <EconomicActivitiesOwnSources>0</EconomicActivitiesOwnSources>
+    <Total>1</Total>
+    <HouseholdConsumptionPerCapita>1</HouseholdConsumptionPerCapita>
+  </reg>
 </registers>
