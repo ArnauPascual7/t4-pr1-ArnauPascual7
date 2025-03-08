@@ -1,0 +1,219 @@
+﻿@page
+@model EcoEnergyRazorPages.Pages.AddEnergyIndicatorModel
+@{
+	ViewData["Title"] = "Afegir Indicator d'energia";
+	List<string> header = ["Data", "PBEE_Hidroelectr", "PBEE_Carbo", "PBEE_GasNat", "PBEE_FuelOil", "PBEE_CiclComb", "PBEE_Nuclear", "CDEEBC_ProdBruta",
+	"CDEEBC_ConsumAux", "CDEEBC_ProdNeta", "CDEEBC_ConsumBomb", "CDEEBC_ProdDisp", "CDEEBC_TotVendesXarxaCentral", "CDEEBC_SaldoIntercanviElectr",
+	"CDEEBC_DemandaElectr", "CDEEBC_TotalEBCMercatRegulat", "CDEEBC_TotalEBCMercatLliure", "FEE_Industria", "FEE_Terciari", "FEE_Domestic",
+	"FEE_Primari", "FEE_Energetic", "FEEI_ConsObrPub", "FEEI_SiderFoneria", "FEEI_Metalurgia", "FEEI_IndusVidre", "FEEI_CimentsCalGuix",
+	"FEEI_AltresMatConstr","FEEI_QuimPetroquim", "FEEI_ConstrMedTrans", "FEEI_RestaTransforMetal", "FEEI_AlimBegudaTabac", "FEEI_TextilConfecCuirCalçat",
+	"FEEI_PastaPaperCartro", "FEEI_AltresIndus", "DGGN_PuntFrontEnagas", "DGGN_DistrAlimGNL", "DGGN_ConsumGNCentrTerm", "CCAC_GasolinaAuto", "CCAC_GasoilA"];
+}
+
+<div>
+	<div class="text-center"><h1 class="display-4">Afegir Indicador d'energia</h1></div>
+	<form action="" method="post">
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.PBEE_Hidroelectr" class="form-label">@header[1]</label>
+			<input asp-for="NewEnergyIndicator.PBEE_Hidroelectr" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.PBEE_Hidroelectr" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.PBEE_Carbo" class="form-label">@header[2]</label>
+			<input asp-for="NewEnergyIndicator.PBEE_Carbo" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.PBEE_Carbo" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.PBEE_GasNat" class="form-label">@header[3]</label>
+			<input asp-for="NewEnergyIndicator.PBEE_GasNat" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.PBEE_GasNat" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.PBEE_FuelOil" class="form-label">@header[4]</label>
+			<input asp-for="NewEnergyIndicator.PBEE_FuelOil" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.PBEE_FuelOil" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.PBEE_CiclComb" class="form-label">@header[5]</label>
+			<input asp-for="NewEnergyIndicator.PBEE_CiclComb" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.PBEE_CiclComb" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.PBEE_Nuclear" class="form-label">@header[6]</label>
+			<input asp-for="NewEnergyIndicator.PBEE_Nuclear" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.PBEE_Nuclear" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_ProdBruta" class="form-label">@header[7]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_ProdBruta" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_ProdBruta" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_ConsumAux" class="form-label">@header[8]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_ConsumAux" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_ConsumAux" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_ProdNeta" class="form-label">@header[9]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_ProdNeta" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_ProdNeta" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_ConsumBomb" class="form-label">@header[10]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_ConsumBomb" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_ConsumBomb" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_ProdDisp" class="form-label">@header[11]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_ProdDisp" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_ProdDisp" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_TotVendesXarxaCentral" class="form-label">@header[12]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_TotVendesXarxaCentral" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_TotVendesXarxaCentral" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_SaldoIntercanviElectr" class="form-label">@header[13]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_SaldoIntercanviElectr" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_SaldoIntercanviElectr" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_DemandaElectr" class="form-label">@header[14]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_DemandaElectr" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_DemandaElectr" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_TotalEBCMercatRegulat" class="form-label">@header[15]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_TotalEBCMercatRegulat" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_TotalEBCMercatRegulat" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CDEEBC_TotalEBCMercatLliure" class="form-label">@header[16]</label>
+			<input asp-for="NewEnergyIndicator.CDEEBC_TotalEBCMercatLliure" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CDEEBC_TotalEBCMercatLliure" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEE_Industria" class="form-label">@header[17]</label>
+			<input asp-for="NewEnergyIndicator.FEE_Industria" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEE_Industria" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEE_Terciari" class="form-label">@header[18]</label>
+			<input asp-for="NewEnergyIndicator.FEE_Terciari" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEE_Terciari" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEE_Domestic" class="form-label">@header[19]</label>
+			<input asp-for="NewEnergyIndicator.FEE_Domestic" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEE_Domestic" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEE_Primari" class="form-label">@header[20]</label>
+			<input asp-for="NewEnergyIndicator.FEE_Primari" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEE_Primari" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEE_Energetic" class="form-label">@header[21]</label>
+			<input asp-for="NewEnergyIndicator.FEE_Energetic" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEE_Energetic" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_ConsObrPub" class="form-label">@header[22]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_ConsObrPub" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_ConsObrPub" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_SiderFoneria" class="form-label">@header[23]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_SiderFoneria" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_SiderFoneria" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_Metalurgia" class="form-label">@header[24]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_Metalurgia" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_Metalurgia" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_IndusVidre" class="form-label">@header[25]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_IndusVidre" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_IndusVidre" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_CimentsCalGuix" class="form-label">@header[26]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_CimentsCalGuix" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_CimentsCalGuix" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_AltresMatConstr" class="form-label">@header[27]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_AltresMatConstr" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_AltresMatConstr" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_QuimPetroquim" class="form-label">@header[28]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_QuimPetroquim" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_QuimPetroquim" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_ConstrMedTrans" class="form-label">@header[29]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_ConstrMedTrans" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_ConstrMedTrans" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_RestaTransforMetal" class="form-label">@header[30]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_RestaTransforMetal" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_RestaTransforMetal" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_AlimBegudaTabac" class="form-label">@header[31]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_AlimBegudaTabac" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_AlimBegudaTabac" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_TextilConfecCuirCalçat" class="form-label">@header[32]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_TextilConfecCuirCalçat" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_TextilConfecCuirCalçat" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_PastaPaperCartro" class="form-label">@header[33]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_PastaPaperCartro" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_PastaPaperCartro" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.FEEI_AltresIndus" class="form-label">@header[34]</label>
+			<input asp-for="NewEnergyIndicator.FEEI_AltresIndus" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.FEEI_AltresIndus" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.DGGN_PuntFrontEnagas" class="form-label">@header[35]</label>
+			<input asp-for="NewEnergyIndicator.DGGN_PuntFrontEnagas" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.DGGN_PuntFrontEnagas" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.DGGN_DistrAlimGNL" class="form-label">@header[36]</label>
+			<input asp-for="NewEnergyIndicator.DGGN_DistrAlimGNL" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.DGGN_DistrAlimGNL" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.DGGN_ConsumGNCentrTerm" class="form-label">@header[37]</label>
+			<input asp-for="NewEnergyIndicator.DGGN_ConsumGNCentrTerm" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.DGGN_ConsumGNCentrTerm" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CCAC_GasolinaAuto" class="form-label">@header[38]</label>
+			<input asp-for="NewEnergyIndicator.CCAC_GasolinaAuto" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CCAC_GasolinaAuto" class="alert-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="NewEnergyIndicator.CCAC_GasoilA" class="form-label">@header[39]</label>
+			<input asp-for="NewEnergyIndicator.CCAC_GasoilA" class="form-control" />
+			<span asp-validation-for="NewEnergyIndicator.CCAC_GasoilA" class="alert-danger"></span>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Afegir</button>
+	</form>
+	<p>@Model.MsgFileError</p>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
