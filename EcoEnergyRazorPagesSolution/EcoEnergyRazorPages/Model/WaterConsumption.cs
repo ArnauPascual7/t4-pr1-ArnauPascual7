@@ -2,7 +2,7 @@
 
 namespace EcoEnergyRazorPages.Model
 {
-    public class WaterConsumption
+    public class WaterConsumption : IComparable<WaterConsumption>
     {
         public int Year { get; set; } = DateTime.Now.Year;
         [Required(ErrorMessage = "Aquest camp és obligatori")]
@@ -22,6 +22,10 @@ namespace EcoEnergyRazorPages.Model
         {
             Total = DomesticNetwork + EconomicActivitiesOwnSources;
             HouseholdConsumptionPerCapita = float.Round((float)Total / Population, 2);
+        }
+        public int CompareTo(WaterConsumption other)
+        {
+            return Year.CompareTo(other.Year);
         }
     }
 }

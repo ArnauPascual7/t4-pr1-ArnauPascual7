@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <registers>
   <reg>
-    <Year>0</Year>
-    <CountyCode>6</CountyCode>
-    <County />
-    <Population>0</Population>
-    <DomesticNetwork>0</DomesticNetwork>
-    <EconomicActivitiesOwnSources>0</EconomicActivitiesOwnSources>
-    <Total>0</Total>
-    <HouseholdConsumptionPerCapita>0</HouseholdConsumptionPerCapita>
-  </reg>
-  <reg>
     <Year>2025</Year>
     <CountyCode>2</CountyCode>
     <County>sad</County>

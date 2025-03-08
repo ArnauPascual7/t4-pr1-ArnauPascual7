@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Xml.Linq;
 using EcoEnergyRazorPages.Model;
 using EcoEnergyRazorPages.Tools;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +20,35 @@ namespace EcoEnergyRazorPages.Pages
         public List<WaterConsumption> SusWaterConsumption { get; set; } = new List<WaterConsumption>();*/
         public void OnGet()
         {
-            string fileName = "consum_aigua_cat_per_comarques.csv";
-            string filePath = @"ModelData\" + fileName;
-            if (SysIO.File.Exists(filePath))
+            string csvFileName = "consum_aigua_cat_per_comarques.csv";
+            string xmlFileName = "consum_aigua_cat_per_comarques.xml";
+            string csvFilePath = @"ModelData\" + csvFileName;
+            string xmlFilePath = @"ModelData\" + xmlFileName;
+            if (SysIO.File.Exists(csvFilePath))
             {
-                WaterConsumptions = FilesHelper.ReadCsv<WaterConsumption>(filePath);
-                MunicipalitiesWithMoreWater = CheckWaterConsumptioMostRecentYear(WaterConsumptions);
+                WaterConsumptions = FilesHelper.ReadCsv<WaterConsumption>(csvFilePath);
+                XDocument xmlDoc = XDocument.Load(xmlFilePath);
+                foreach (XElement element in xmlDoc.Root.Elements())
+                {
+                    WaterConsumption waterConsumption = new WaterConsumption
+                    {
+                        Year = int.Parse(element.Element("Year").Value),
+                        CountyCode = int.Parse(element.Element("CountyCode").Value),
+                        County = element.Element("County").Value,
+                        Population = int.Parse(element.Element("Population").Value),
+                        DomesticNetwork = int.Parse(element.Element("DomesticNetwork").Value),
+                        EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources").Value),
+                        Total = int.Parse(element.Element("Total").Value),
+                        HouseholdConsumptionPerCapita = float.Parse(element.Element("HouseholdConsumptionPerCapita").Value)
+                    };
+                    WaterConsumptions.Add(waterConsumption);
+                }
+                WaterConsumptions.Sort();
+
+                /*MunicipalitiesWithMoreWater = CheckWaterConsumptioMostRecentYear(WaterConsumptions);
                 MunicipalitiesWithMoreWater.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
                 MunicipalitiesWithMoreWater.Reverse();
-                MunicipalitiesWithMoreWater.RemoveRange(NumListMunicipalitiesWithMoreWater - 1, MunicipalitiesWithMoreWater.Count - NumListMunicipalitiesWithMoreWater);
+                MunicipalitiesWithMoreWater.RemoveRange(NumListMunicipalitiesWithMoreWater - 1, MunicipalitiesWithMoreWater.Count - NumListMunicipalitiesWithMoreWater);*/
                 /*SusWaterConsumption = CheckSusWaterConsumption(WaterConsumptions, SusDigitsWaterConsumption);*/
             }
             else
