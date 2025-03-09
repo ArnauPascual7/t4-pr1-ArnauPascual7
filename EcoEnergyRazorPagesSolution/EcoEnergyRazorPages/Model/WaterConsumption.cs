@@ -6,9 +6,9 @@ namespace EcoEnergyRazorPages.Model
     {
         public int Year { get; set; } = 2024; //DateTime.Now.Year
         [Required(ErrorMessage = "Aquest camp és obligatori")]
-        public int CountyCode { get; set; }
+        public int RegionCode { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
-        public string? County { get; set; }
+        public string? RegionName { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
         public int Population { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]

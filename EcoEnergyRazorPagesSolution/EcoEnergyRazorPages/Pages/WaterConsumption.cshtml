@@ -25,8 +25,8 @@
 				{
 					<tr>
 						<td>@water.Year</td>
-						<td>@water.CountyCode</td>
-						<td>@water.County</td>
+						<td>@water.RegionCode</td>
+						<td>@water.RegionName</td>
 						<td>@water.Population</td>
 						<td>@water.DomesticNetwork</td>
 						<td>@water.EconomicActivitiesOwnSources</td>
@@ -39,7 +39,7 @@
 		<p>Quantitat de registres: @Model.WaterConsumptions.Count()</p>
 		<h3>Estadísitiques</h3>
 		<h4>Municipis amb més consum d'aigua en l'any més recent</h4>
-		@if (Model.MunicipalitiesWithMoreWater.Any())
+		@if (Model.MunicipalitiesWithMoreWaterInLastYear.Any())
 		{
 			<table class="table">
 				<thead>
@@ -51,12 +51,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var water in Model.MunicipalitiesWithMoreWater)
+					@foreach (var water in Model.MunicipalitiesWithMoreWaterInLastYear)
 					{
 						<tr>
 							<td>@water.Year</td>
-							<td>@water.CountyCode</td>
-							<td>@water.County</td>
+							<td>@water.RegionCode</td>
+							<td>@water.RegionName</td>
 							<td>@water.Population</td>
 							<td>@water.DomesticNetwork</td>
 							<td>@water.EconomicActivitiesOwnSources</td>
@@ -71,7 +71,7 @@
 		{
 			<p>No hi ha registres</p>
 		}
-		<p>Quantitat de registres: @Model.MunicipalitiesWithMoreWater.Count()</p>
+		<p>Quantitat de registres: @Model.MunicipalitiesWithMoreWaterInLastYear.Count()</p>
 		<h4>Consum mitja d'aigua per comarca</h4>
 		@if (Model.AverageWaterConsumptionByRegion.Any())
 		{
@@ -87,8 +87,8 @@
 					@foreach (var water in Model.AverageWaterConsumptionByRegion)
 					{
 						<tr>
-							<td>@water.CountyCode</td>
-							<td>@water.County</td>
+							<td>@water.RegionCode</td>
+							<td>@water.RegionName</td>
 							<td>@water.HouseholdConsumptionPerCapita</td>
 						</tr>
 					}
@@ -117,13 +117,13 @@
 					{
 						<tr>
 							<td>@water.Year</td>
-							<td>@water.CountyCode</td>
-							<td>@water.County</td>
+							<td>@water.Year</td>
+							<td>@water.Year</td>
+							<td>@water.RegionCode</td>
+							<td>@water.RegionName</td>
 							<td>@water.Population</td>
 							<td>@water.DomesticNetwork</td>
 							<td>@water.EconomicActivitiesOwnSources</td>
-							<td>@water.Total</td>
-							<td>@water.HouseholdConsumptionPerCapita</td>
 						</tr>
 					}
 				</tbody>
@@ -148,8 +148,8 @@
 					@foreach (var water in Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years)
 					{
 						<tr>
-							<td>@water.CountyCode</td>
-							<td>@water.County</td>
+							<td>@water.RegionCode</td>
+							<td>@water.RegionName</td>
 						</tr>
 					}
 				</tbody>
