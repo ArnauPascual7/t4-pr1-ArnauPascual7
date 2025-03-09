@@ -4,7 +4,7 @@ namespace EcoEnergyRazorPages.Model
 {
     public class WaterConsumption : IComparable<WaterConsumption>
     {
-        public int Year { get; set; } = DateTime.Now.Year;
+        public int Year { get; set; } = 2024; //DateTime.Now.Year
         [Required(ErrorMessage = "Aquest camp és obligatori")]
         public int CountyCode { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
