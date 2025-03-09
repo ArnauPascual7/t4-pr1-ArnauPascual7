@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Xml;
@@ -12,13 +13,14 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class WaterConsumptionModel : PageModel
     {
-        public const int NumListMunicipalitiesWithMoreWater = 10;
-        public const int SusDigitsWaterConsumption = 3;
+        public const int NumCountMunicipalitiesWithMoreWater = 10;
+        public const int SusDigitsWaterConsumption = 8;
         public string MsgFileError;
         public List<WaterConsumption> WaterConsumptions { get; set; } = new List<WaterConsumption>();
         public List<WaterConsumption> MunicipalitiesWithMoreWater { get; set; } = new List<WaterConsumption>();
-        /*public List<WaterConsumption> AverageWaterConsumptionByRegion { get; set; } = new List<WaterConsumption>();
-        public List<WaterConsumption> SusWaterConsumption { get; set; } = new List<WaterConsumption>();*/
+        public List<WaterConsumption> AverageWaterConsumptionByRegion { get; set; } = new List<WaterConsumption>();
+        public List<WaterConsumption> SusWaterConsumption { get; set; } = new List<WaterConsumption>();
+        public List<WaterConsumption> MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years { get; set; } = new List<WaterConsumption>();
         public void OnGet()
         {
             string csvFileName = "consum_aigua_cat_per_comarques.csv";
@@ -53,45 +55,93 @@ namespace EcoEnergyRazorPages.Pages
                 }
                 WaterConsumptions.Sort();
 
-                /*MunicipalitiesWithMoreWater = CheckWaterConsumptioMostRecentYear(WaterConsumptions);
+                MunicipalitiesWithMoreWater = CheckWaterConsumptionMostRecentYearList(WaterConsumptions);
                 MunicipalitiesWithMoreWater.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
                 MunicipalitiesWithMoreWater.Reverse();
-                MunicipalitiesWithMoreWater.RemoveRange(NumListMunicipalitiesWithMoreWater - 1, MunicipalitiesWithMoreWater.Count - NumListMunicipalitiesWithMoreWater);*/
-                /*SusWaterConsumption = CheckSusWaterConsumption(WaterConsumptions, SusDigitsWaterConsumption);*/
+                if (MunicipalitiesWithMoreWater.Count >= NumCountMunicipalitiesWithMoreWater)
+                {
+                    MunicipalitiesWithMoreWater.RemoveRange(NumCountMunicipalitiesWithMoreWater - 1, MunicipalitiesWithMoreWater.Count - NumCountMunicipalitiesWithMoreWater);
+                }
+
+                AverageWaterConsumptionByRegion = WaterConsumptions
+                    .GroupBy(waterCons => waterCons.CountyCode)
+                    .Select(g => new WaterConsumption
+                    {
+                        CountyCode = g.Key,
+                        County = g.First().County,
+                        HouseholdConsumptionPerCapita = float.Round(g.Average(waterCons => waterCons.HouseholdConsumptionPerCapita), 2)
+                    })
+                    .ToList();
+                AverageWaterConsumptionByRegion.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
+                AverageWaterConsumptionByRegion.Reverse();
+
+                SusWaterConsumption = CheckSusWaterConsumptionList(WaterConsumptions, SusDigitsWaterConsumption);
+
+                /*MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years = CheckWaterConsumptionLast5YearsList(WaterConsumptions);
+                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Sort();
+                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years = MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years
+                    .GroupBy(waterCons => waterCons.CountyCode)
+                    .Select(g => new WaterConsumption
+                    {
+                        CountyCode = g.Key,
+                        County = g.First().County,
+                        Total = g.First().Total - g.Last().Total
+                    })
+                    .Where(waterCons => waterCons.Total > 0)
+                    .ToList();
+                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Sort(new WaterConsumptionComparer());*/
             }
             else
             {
                 MsgFileError = "Error en la càrrega de dades";
             }
         }
-        public static List<WaterConsumption> CheckWaterConsumptioMostRecentYear(List<WaterConsumption> waterConsumptions)
+        public static List<WaterConsumption> CheckWaterConsumptionMostRecentYearList(List<WaterConsumption> waterConsumptions)
         {
-            List<WaterConsumption> MostRecentYearWaterConsumptions = new List<WaterConsumption>();
+            List<WaterConsumption> mostRecentYearWaterConsumptions = new List<WaterConsumption>();
+            int year = CheckWaterConsumptionMostRecentYear(waterConsumptions);
+            foreach (WaterConsumption waterCons in waterConsumptions)
+            {
+                if (waterCons.Year == year)
+                {
+                    mostRecentYearWaterConsumptions.Add(waterCons);
+                }
+            }
+            return mostRecentYearWaterConsumptions;
+        }
+        public static int CheckWaterConsumptionMostRecentYear(List<WaterConsumption> waterConsumptions)
+        {
             int year = 0;
             foreach (WaterConsumption waterCons in waterConsumptions)
             {
                 year = waterCons.Year > year ? waterCons.Year : year;
             }
-            foreach (WaterConsumption waterCons in waterConsumptions)
-            {
-                if (waterCons.Year == year)
-                {
-                    MostRecentYearWaterConsumptions.Add(waterCons);
-                }
-            }
-            return MostRecentYearWaterConsumptions;
+            return year;
         }
-        /*public static List<WaterConsumption> CheckSusWaterConsumption(List<WaterConsumption> waterConsumptions, int digits)
+        public static List<WaterConsumption> CheckSusWaterConsumptionList(List<WaterConsumption> waterConsumptions, int digits)
         {
-            List<WaterConsumption> SusWaterConsumption = new List<WaterConsumption>();
+            List<WaterConsumption> susWaterConsumption = new List<WaterConsumption>();
             foreach (WaterConsumption waterCons in waterConsumptions)
             {
-                if (Convert.ToInt32(waterCons.HouseholdConsumptionPerCapita).ToString().Length > digits)
+                if (Convert.ToInt32(waterCons.Total).ToString().Length > digits)
                 {
-                    SusWaterConsumption.Add(waterCons);
+                    susWaterConsumption.Add(waterCons);
                 }
             }
-            return SusWaterConsumption;
-        }*/
+            return susWaterConsumption;
+        }
+        public static List<WaterConsumption> CheckWaterConsumptionLast5YearsList(List<WaterConsumption> waterConsumptions)
+        {
+            List<WaterConsumption> waterConsumptionLast5Years = new List<WaterConsumption>();
+            int lastYear = CheckWaterConsumptionMostRecentYear(waterConsumptions);
+            foreach (WaterConsumption waterCons in waterConsumptions)
+            {
+                if (waterCons.Year >= lastYear - 5)
+                {
+                    waterConsumptionLast5Years.Add(waterCons);
+                }
+            }
+            return waterConsumptionLast5Years;
+        }
     }
 }
