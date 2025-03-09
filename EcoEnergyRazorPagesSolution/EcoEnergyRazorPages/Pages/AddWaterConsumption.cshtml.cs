@@ -32,8 +32,8 @@ namespace EcoEnergyRazorPages.Pages
                 XDocument newXmlDoc = new XDocument(
                     new XElement("reg", 
                         new XElement("Year", NewWaterConsumption.Year),
-                        new XElement("CountyCode", NewWaterConsumption.CountyCode),
-                        new XElement("County", NewWaterConsumption.County),
+                        new XElement("CountyCode", NewWaterConsumption.RegionCode),
+                        new XElement("County", NewWaterConsumption.RegionName),
                         new XElement("Population", NewWaterConsumption.Population),
                         new XElement("DomesticNetwork", NewWaterConsumption.DomesticNetwork),
                         new XElement("EconomicActivitiesOwnSources", NewWaterConsumption.EconomicActivitiesOwnSources),

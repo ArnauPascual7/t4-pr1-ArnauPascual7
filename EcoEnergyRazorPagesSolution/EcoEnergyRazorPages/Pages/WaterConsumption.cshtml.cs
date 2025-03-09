@@ -14,10 +14,10 @@ namespace EcoEnergyRazorPages.Pages
     public class WaterConsumptionModel : PageModel
     {
         public const int NumCountMunicipalitiesWithMoreWater = 10;
-        public const int SusDigitsWaterConsumption = 8;
+        public const int SusDigitsWaterConsumption = 6;
         public string MsgFileError;
         public List<WaterConsumption> WaterConsumptions { get; set; } = new List<WaterConsumption>();
-        public List<WaterConsumption> MunicipalitiesWithMoreWater { get; set; } = new List<WaterConsumption>();
+        public List<WaterConsumption> MunicipalitiesWithMoreWaterInLastYear { get; set; } = new List<WaterConsumption>();
         public List<WaterConsumption> AverageWaterConsumptionByRegion { get; set; } = new List<WaterConsumption>();
         public List<WaterConsumption> SusWaterConsumption { get; set; } = new List<WaterConsumption>();
         public List<WaterConsumption> MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years { get; set; } = new List<WaterConsumption>();
@@ -38,8 +38,8 @@ namespace EcoEnergyRazorPages.Pages
                         WaterConsumption waterConsumption = new WaterConsumption
                         {
                             Year = int.Parse(element.Element("Year").Value),
-                            CountyCode = int.Parse(element.Element("CountyCode").Value),
-                            County = element.Element("County").Value,
+                            RegionCode = int.Parse(element.Element("CountyCode").Value),
+                            RegionName = element.Element("County").Value,
                             Population = int.Parse(element.Element("Population").Value),
                             DomesticNetwork = int.Parse(element.Element("DomesticNetwork").Value),
                             EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources").Value),
@@ -53,43 +53,33 @@ namespace EcoEnergyRazorPages.Pages
                 {
                     Debug.WriteLine($"?: Error en la lectura del fitxer XML: {ex}");
                 }
-                WaterConsumptions.Sort();
+                WaterConsumptions.Sort(new WaterConsumptionComparer().YearRegionCompare);
 
-                MunicipalitiesWithMoreWater = CheckWaterConsumptionMostRecentYearList(WaterConsumptions);
-                MunicipalitiesWithMoreWater.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
-                MunicipalitiesWithMoreWater.Reverse();
-                if (MunicipalitiesWithMoreWater.Count >= NumCountMunicipalitiesWithMoreWater)
+                MunicipalitiesWithMoreWaterInLastYear = CheckWaterConsumptionMostRecentYearList(WaterConsumptions);
+                MunicipalitiesWithMoreWaterInLastYear.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
+                MunicipalitiesWithMoreWaterInLastYear.Reverse();
+                if (MunicipalitiesWithMoreWaterInLastYear.Count >= NumCountMunicipalitiesWithMoreWater)
                 {
-                    MunicipalitiesWithMoreWater.RemoveRange(NumCountMunicipalitiesWithMoreWater - 1, MunicipalitiesWithMoreWater.Count - NumCountMunicipalitiesWithMoreWater);
+                    MunicipalitiesWithMoreWaterInLastYear.RemoveRange(NumCountMunicipalitiesWithMoreWater - 1, MunicipalitiesWithMoreWaterInLastYear.Count - NumCountMunicipalitiesWithMoreWater);
                 }
 
                 AverageWaterConsumptionByRegion = WaterConsumptions
-                    .GroupBy(waterCons => waterCons.CountyCode)
+                    .GroupBy(waterCons => waterCons.RegionCode)
                     .Select(g => new WaterConsumption
                     {
-                        CountyCode = g.Key,
-                        County = g.First().County,
+                        RegionCode = g.Key,
+                        RegionName = g.First().RegionName,
                         HouseholdConsumptionPerCapita = float.Round(g.Average(waterCons => waterCons.HouseholdConsumptionPerCapita), 2)
                     })
+                    .OrderByDescending(waterCons => waterCons.HouseholdConsumptionPerCapita)
                     .ToList();
-                AverageWaterConsumptionByRegion.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
-                AverageWaterConsumptionByRegion.Reverse();
 
                 SusWaterConsumption = CheckSusWaterConsumptionList(WaterConsumptions, SusDigitsWaterConsumption);
+                SusWaterConsumption.Sort(new WaterConsumptionComparer().YearRegionCompare);
 
-                /*MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years = CheckWaterConsumptionLast5YearsList(WaterConsumptions);
-                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Sort();
-                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years = MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years
-                    .GroupBy(waterCons => waterCons.CountyCode)
-                    .Select(g => new WaterConsumption
-                    {
-                        CountyCode = g.Key,
-                        County = g.First().County,
-                        Total = g.First().Total - g.Last().Total
-                    })
-                    .Where(waterCons => waterCons.Total > 0)
-                    .ToList();
-                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Sort(new WaterConsumptionComparer());*/
+                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years = CheckWaterConsumptionLast5YearsList(WaterConsumptions);
+                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Sort(new WaterConsumptionComparer());
+                MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years = CheckWaterConsumptionIncreasingTrendList(MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years);
             }
             else
             {
@@ -123,7 +113,7 @@ namespace EcoEnergyRazorPages.Pages
             List<WaterConsumption> susWaterConsumption = new List<WaterConsumption>();
             foreach (WaterConsumption waterCons in waterConsumptions)
             {
-                if (Convert.ToInt32(waterCons.Total).ToString().Length > digits)
+                if (waterCons.Total.ToString().Length > digits)
                 {
                     susWaterConsumption.Add(waterCons);
                 }
@@ -136,12 +126,48 @@ namespace EcoEnergyRazorPages.Pages
             int lastYear = CheckWaterConsumptionMostRecentYear(waterConsumptions);
             foreach (WaterConsumption waterCons in waterConsumptions)
             {
-                if (waterCons.Year >= lastYear - 5)
+                if (waterCons.Year > lastYear - 5)
                 {
                     waterConsumptionLast5Years.Add(waterCons);
                 }
             }
             return waterConsumptionLast5Years;
+        }
+        public static List<WaterConsumption> CheckWaterConsumptionIncreasingTrendList(List<WaterConsumption> waterConsumptionsLast5Years)
+        {
+            List<WaterConsumption> waterConsumptions = new List<WaterConsumption>();
+            for (int i = 1; i <= CheckHigherRegionCode(waterConsumptionsLast5Years); i++)
+            {
+                int count = 0;
+                List<WaterConsumption> regionWaterConsumptions = waterConsumptionsLast5Years
+                    .FindAll(waterCons => waterCons.RegionCode == i);
+                regionWaterConsumptions.Sort();
+                for (int j = 0; j < regionWaterConsumptions.Count - 1; j++)
+                {
+                    if (regionWaterConsumptions[j].Total < regionWaterConsumptions[j + 1].Total)
+                    {
+                        count++;
+                    }
+                }
+                if (count >= 4)
+                {
+                    waterConsumptions.Add(new WaterConsumption
+                    {
+                        RegionCode = regionWaterConsumptions[0].RegionCode,
+                        RegionName = regionWaterConsumptions[0].RegionName
+                    });
+                }
+            }
+            return waterConsumptions;
+        }
+        public static int CheckHigherRegionCode(List<WaterConsumption> waterConsumptions)
+        {
+            int regionCode = 0;
+            foreach (WaterConsumption waterCons in waterConsumptions)
+            {
+                regionCode = waterCons.RegionCode > regionCode ? waterCons.RegionCode : regionCode;
+            }
+            return regionCode;
         }
     }
 }
