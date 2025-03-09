@@ -11,20 +11,57 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="~/images/logo.jpg" alt="" height="50" /></a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container" style="margin-bottom: -10px">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="~/images/logo.jpg" alt="logo" width="50" height="50" class="d-inline-block" />
+                    EcoEnergy Solutions
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 nav-underline" style="margin-top: 20px">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            @if (ViewContext.RouteData.Values["page"]?.ToString() == "/Index")
+                            {
+                                <a class="nav-link text-white active" aria-current="page" asp-area="" asp-page="/Index">Inici</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-white" asp-area="" asp-page="/Index">Inici</a>
+                            })
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            @if (ViewContext.RouteData.Values["page"]?.ToString() == "/Simulations")
+                            {
+                                <a class="nav-link text-white active" aria-current="page" asp-area="" asp-page="/Simulations">Simulacions</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-white" asp-area="" asp-page="/Simulations">Simulacions</a>
+                            })
+                        </li>
+                        <li class="nav-item">
+                            @if (ViewContext.RouteData.Values["page"]?.ToString() == "/EnergyIndicators")
+                            {
+                                <a class="nav-link text-white active" aria-current="page" asp-area="" asp-page="/EnergyIndicators">Indicadors d'energia</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-white" asp-area="" asp-page="/EnergyIndicators">Indicadors d'energia</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+							@if (ViewContext.RouteData.Values["page"]?.ToString() == "/WaterConsumption")
+							{
+								<a class="nav-link text-white active" aria-current="page" asp-area="" asp-page="/WaterConsumption">Consum d'aigua</a>
+							}
+							else
+							{
+								<a class="nav-link text-white" asp-area="" asp-page="/WaterConsumption">Consum d'aigua</a>
+							}
                         </li>
                     </ul>
                 </div>
@@ -37,8 +74,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container text-center page-green">
+    <footer class="border-top footer text-muted navbar-dark bg-dark">
+        <div class="container text-center text-white">
             Desenvolupat per <strong>ArnauPascual</strong> | DAMv1 2025
             @*&copy; 2025 - EcoEnergyRazorPages - <a asp-area="" asp-page="/Privacy">Privacy</a>*@
         </div>
