@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Xml;
 using System.Xml.Linq;
 using EcoEnergyRazorPages.Model;
 using EcoEnergyRazorPages.Tools;
@@ -24,24 +25,31 @@ namespace EcoEnergyRazorPages.Pages
             string xmlFileName = "consum_aigua_cat_per_comarques.xml";
             string csvFilePath = @"ModelData\" + csvFileName;
             string xmlFilePath = @"ModelData\" + xmlFileName;
-            if (SysIO.File.Exists(csvFilePath))
+            if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(xmlFilePath))
             {
                 WaterConsumptions = FilesHelper.ReadCsv<WaterConsumption>(csvFilePath);
-                XDocument xmlDoc = XDocument.Load(xmlFilePath);
-                foreach (XElement element in xmlDoc.Root.Elements())
+                try
                 {
-                    WaterConsumption waterConsumption = new WaterConsumption
+                    XDocument xmlDoc = XDocument.Load(xmlFilePath);
+                    foreach (XElement element in xmlDoc.Root.Elements())
                     {
-                        Year = int.Parse(element.Element("Year").Value),
-                        CountyCode = int.Parse(element.Element("CountyCode").Value),
-                        County = element.Element("County").Value,
-                        Population = int.Parse(element.Element("Population").Value),
-                        DomesticNetwork = int.Parse(element.Element("DomesticNetwork").Value),
-                        EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources").Value),
-                        Total = int.Parse(element.Element("Total").Value),
-                        HouseholdConsumptionPerCapita = float.Parse(element.Element("HouseholdConsumptionPerCapita").Value)
-                    };
-                    WaterConsumptions.Add(waterConsumption);
+                        WaterConsumption waterConsumption = new WaterConsumption
+                        {
+                            Year = int.Parse(element.Element("Year").Value),
+                            CountyCode = int.Parse(element.Element("CountyCode").Value),
+                            County = element.Element("County").Value,
+                            Population = int.Parse(element.Element("Population").Value),
+                            DomesticNetwork = int.Parse(element.Element("DomesticNetwork").Value),
+                            EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources").Value),
+                            Total = int.Parse(element.Element("Total").Value),
+                            HouseholdConsumptionPerCapita = float.Parse(element.Element("HouseholdConsumptionPerCapita").Value)
+                        };
+                        WaterConsumptions.Add(waterConsumption);
+                    }
+                }
+                catch (XmlException ex)
+                {
+                    Debug.WriteLine($"?: Error en la lectura del fitxer XML: {ex}");
                 }
                 WaterConsumptions.Sort();
 
