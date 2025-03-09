@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json;
 using EcoEnergyRazorPages.Model;
 using EcoEnergyRazorPages.Tools;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,19 @@ namespace EcoEnergyRazorPages.Pages
         public List<EnergyIndicator> ElectricalDemandAvailableProductionIndicators { get; set; } = new List<EnergyIndicator>();
         public void OnGet()
         {
-            string fileName = "indicadors_energetics_cat.csv";
-            string filePath = @"ModelData\" + fileName;
-            if (SysIO.File.Exists(filePath))
+            string csvFileName = "indicadors_energetics_cat.csv";
+            string jsonFileName = "indicadors_energetics_cat.json";
+            string csvFilePath = @"ModelData\" + csvFileName;
+            string jsonFilePath = @"ModelData\" + jsonFileName;
+            if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(jsonFilePath))
             {
-                EnergyIndicators = FilesHelper.ReadCsv<EnergyIndicator>(filePath);
+                string json = SysIO.File.ReadAllText(jsonFilePath);
+                EnergyIndicators = FilesHelper.ReadCsv<EnergyIndicator>(csvFilePath);
+                if (json != null && json != "")
+                {
+                    EnergyIndicators.AddRange(JsonSerializer.Deserialize<List<EnergyIndicator>>(json));
+                }
+                EnergyIndicators.Sort();
                 NetProductionIndicators = EnergyIndicators
                     .Where(indicator => indicator.CDEEBC_ProdNeta > 3000)
                     .Select(indicator => indicator)
