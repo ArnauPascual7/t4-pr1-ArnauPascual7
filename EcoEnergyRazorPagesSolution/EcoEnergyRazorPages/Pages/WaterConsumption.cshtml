@@ -37,61 +37,129 @@
 			</tbody>
 		</table>
 		<p>Quantitat de registres: @Model.WaterConsumptions.Count()</p>
-		@*<h3>Estadísitiques</h3>
+		<h3>Estadísitiques</h3>
 		<h4>Municipis amb més consum d'aigua en l'any més recent</h4>
-		<table class="table">
-			<thead>
-				<tr>
-					@foreach (string title in header)
-					{
-						<td>@title</td>
-					}
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var water in Model.MunicipalitiesWithMoreWater)
-				{
+		@if (Model.MunicipalitiesWithMoreWater.Any())
+		{
+			<table class="table">
+				<thead>
 					<tr>
-						<td>@water.Year</td>
-						<td>@water.CountyCode</td>
-						<td>@water.County</td>
-						<td>@water.Population</td>
-						<td>@water.DomesticNetwork</td>
-						<td>@water.EconomicActivitiesOwnSources</td>
-						<td>@water.Total</td>
-						<td>@water.HouseholdConsumptionPerCapita</td>
+						@foreach (string title in header)
+						{
+							<td>@title</td>
+						}
 					</tr>
-				}
-			</tbody>
-		</table>
-		<p>Quantitat de registres: @Model.MunicipalitiesWithMoreWater.Count()</p>*@
-		@*<h4>Municipis amb consum d'aigua sospitosos</h4>
-		<table class="table">
-			<thead>
-				<tr>
-					@foreach (string title in header)
+				</thead>
+				<tbody>
+					@foreach (var water in Model.MunicipalitiesWithMoreWater)
 					{
-						<td>@title</td>
+						<tr>
+							<td>@water.Year</td>
+							<td>@water.CountyCode</td>
+							<td>@water.County</td>
+							<td>@water.Population</td>
+							<td>@water.DomesticNetwork</td>
+							<td>@water.EconomicActivitiesOwnSources</td>
+							<td>@water.Total</td>
+							<td>@water.HouseholdConsumptionPerCapita</td>
+						</tr>
 					}
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var water in Model.SusWaterConsumption)
-				{
+				</tbody>
+			</table>
+		}
+		else
+		{
+			<p>No hi ha registres</p>
+		}
+		<p>Quantitat de registres: @Model.MunicipalitiesWithMoreWater.Count()</p>
+		<h4>Consum mitja d'aigua per comarca</h4>
+		@if (Model.AverageWaterConsumptionByRegion.Any())
+		{
+			<table class="table">
+				<thead>
 					<tr>
-						<td>@water.Year</td>
-						<td>@water.CountyCode</td>
-						<td>@water.County</td>
-						<td>@water.Population</td>
-						<td>@water.DomesticNetwork</td>
-						<td>@water.EconomicActivitiesOwnSources</td>
-						<td>@water.Total</td>
-						<td>@water.HouseholdConsumptionPerCapita</td>
+						<td>Codi Comarca</td>
+						<td>Comarca</td>
+						<td>Consum domèstic per càpita</td>
 					</tr>
-				}
-			</tbody>
-		</table>
-		<p>Quantitat de registres: @Model.SusWaterConsumption.Count()</p>*@
+				</thead>
+				<tbody>
+					@foreach (var water in Model.AverageWaterConsumptionByRegion)
+					{
+						<tr>
+							<td>@water.CountyCode</td>
+							<td>@water.County</td>
+							<td>@water.HouseholdConsumptionPerCapita</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<p>Quantitat de registres: @Model.AverageWaterConsumptionByRegion.Count()</p>
+		}
+		else
+		{
+			<p>No hi ha registres</p>
+		}
+		<h4>Municipis amb consum d'aigua sospitosos</h4>
+		@if (Model.SusWaterConsumption.Any())
+		{
+			<table class="table">
+				<thead>
+					<tr>
+						@foreach (string title in header)
+						{
+							<td>@title</td>
+						}
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var water in Model.SusWaterConsumption)
+					{
+						<tr>
+							<td>@water.Year</td>
+							<td>@water.CountyCode</td>
+							<td>@water.County</td>
+							<td>@water.Population</td>
+							<td>@water.DomesticNetwork</td>
+							<td>@water.EconomicActivitiesOwnSources</td>
+							<td>@water.Total</td>
+							<td>@water.HouseholdConsumptionPerCapita</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<p>Quantitat de registres: @Model.SusWaterConsumption.Count()</p>
+		}
+		else
+		{
+			<p>No hi ha registres</p>
+		}
+		<h4>Municipis amb un augment del consum d'aigua en els últims 5 anys</h4>
+		@if (Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Any())
+		{
+			<table class="table">
+				<thead>
+					<tr>
+						<td>Codi Comarca</td>
+						<td>Comarca</td>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var water in Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years)
+					{
+						<tr>
+							<td>@water.CountyCode</td>
+							<td>@water.County</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<p>Quantitat de registres: @Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Count()</p>
+		}
+		else
+		{
+			<p>No hi ha registres</p>
+		}
 	}
 	else
 	{
