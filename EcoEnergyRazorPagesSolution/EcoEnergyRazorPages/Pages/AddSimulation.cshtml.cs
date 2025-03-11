@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.InteropServices.JavaScript;
 using SysIO = System.IO;
 
 namespace EcoEnergyRazorPages.Pages
@@ -14,57 +15,77 @@ namespace EcoEnergyRazorPages.Pages
     public class AddSimulationModel : PageModel
     {
         public string MsgFileError;
-        public string MsgConfigParError;
+        public string MsgParError;
+        public string MsgRatioError;
+        public int? ConfigPar = null;
         [BindProperty]
-        public Simulation NewSimulation { get; set; }
-        public List<SelectListItem> Systems { get; set; } =
-            Enum.GetValues(typeof(SystemType)).Cast<SystemType>().Select(v => new SelectListItem(v.ToString(), v.ToString())).ToList();
-        public void OnGet()
+        public Simulation? Simulation { get; set; }
+        public EnergySystem NewSystem { get; set; } = new SolarSystem();
+        public IActionResult OnPost(string systemtype, double configpar, double ratio, decimal cost, decimal price)
         {
-        }
-        public IActionResult OnPost(string systemtype)
-        {
-            Debug.WriteLine("Simulation System Type --> " + systemtype);
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            string fileName = "simulacions_energia.csv";
-            string filePath = @"ModelData\" + fileName;
-            //Debug.WriteLine("Simulations CSV File Path --> " + Path.GetFullPath(filePath));
-            NewSimulation.SetSystemType(systemtype);
-            if (!NewSimulation.ValidConfigPar())
+            switch (systemtype)
             {
-                switch(NewSimulation.SysType)
-                {
-                    case SystemType.SolarSystem:
-                        MsgConfigParError = "El paràmetre configurat ha de ser major que 1";
-                        break;
-                    case SystemType.WindSystem:
-                        MsgConfigParError = "El paràmetre configurat ha de ser mínim 5";
-                        break;
-                    case SystemType.HydroelectricSystem:
-                        MsgConfigParError = "El paràmetre configurat ha de ser mínim 20";
-                        break;
-                    default:
-                        MsgConfigParError = "El paràmetre configurat no és correcte";
-                        break;
-                }
+                case "1":
+                    NewSystem = new SolarSystem();
+                    break;
+                case "2":
+                    NewSystem = new WindSystem();
+                    break;
+                case "3":
+                    NewSystem = new HydroelectricSystem();
+                    break;
+                default:
+                    MsgParError = "Error: El sistema seleccionat és erroni";
+                    return Page();
+            }
+            Debug.WriteLine("?: New System --> " + NewSystem.GetType());
+
+            try
+            {
+                NewSystem.SetConfigPar(configpar);
+            }
+            catch (System.Exception ex)
+            {
+                MsgParError = ex.Message;
                 return Page();
             }
-            NewSimulation.SetSimulationCalculations();
-            Debug.WriteLine("?: New Simulation --> " + NewSimulation.ToString());
+
+            try
+            { 
+                NewSystem.Ratio = ratio;
+            }
+            catch (System.Exception ex)
+            {
+                MsgRatioError = ex.Message;
+                return Page();
+            }
+
+            NewSystem.KWHCost = cost;
+            NewSystem.KWHPrice = price;
+            NewSystem.SetSystemCalculations();
+
+            string fileName = "simulacions_energia.csv";
+            string filePath = @"ModelData\" + fileName;
+
             if (SysIO.File.Exists(filePath))
             {
-                FilesHelper.WriteCsv(filePath, NewSimulation);
-                /*var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                FilesHelper.WriteCsv(filePath, new Simulation
                 {
-                    HasHeaderRecord = false
-                };
-                using var stream = SysIO.File.Open(filePath, FileMode.Append);
-                using var writer = new StreamWriter(stream);
-                using var csvWriter = new CsvWriter(writer, config);
-                csvWriter.WriteRecord(NewSimulation);*/
+                    SysType = NewSystem.GetType() == typeof(SolarSystem) ? SystemType.SolarSystem
+                    : NewSystem.GetType() == typeof(WindSystem) ? SystemType.WindSystem
+                    : NewSystem.GetType() == typeof(HydroelectricSystem) ? SystemType.HydroelectricSystem : 0,
+                    ConfigPar = NewSystem.GetConfigPar(),
+                    Ratio = NewSystem.Ratio,
+                    EnergyGen = NewSystem.EnergyGen,
+                    KWHCost = NewSystem.KWHCost,
+                    KWHPrice = NewSystem.KWHPrice,
+                    TotalCost = NewSystem.TotalCost,
+                    TotalPrice = NewSystem.TotalPrice
+                });
             }
             else
             {
