@@ -17,6 +17,7 @@ namespace EcoEnergyRazorPages.Pages
         public string MsgConfigParError;
         [BindProperty]
         public Simulation NewSimulation { get; set; }
+        public EnergySystem NewSystem { get; set; }
         public List<SelectListItem> Systems { get; set; } =
             Enum.GetValues(typeof(SystemType)).Cast<SystemType>().Select(v => new SelectListItem(v.ToString(), v.ToString())).ToList();
         public void OnGet()
