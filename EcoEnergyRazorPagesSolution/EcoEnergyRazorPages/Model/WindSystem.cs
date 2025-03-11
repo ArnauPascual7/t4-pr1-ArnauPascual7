@@ -2,11 +2,15 @@
 {
     public class WindSystem : EnergySystem
     {
-        public double WindVelocity { get => WindVelocity; private set
+        private double _windvelocity;
+        public double WindVelocity
+        { 
+            get => _windvelocity;
+            private set
             {
                 if (value >= 5)
                 {
-                    WindVelocity = value;
+                    _windvelocity = value;
                 }
                 else
                 {
@@ -14,14 +18,20 @@
                 }
             }
         }
+        public WindSystem() { }
         public WindSystem(double windvelocity, double ratio, decimal kwhCost, decimal kwhPrice)
             : base(ratio, kwhCost, kwhPrice)
         {
             WindVelocity = windvelocity;
         }
+        public override void SetConfigPar(double par)
+        {
+            WindVelocity = par;
+        }
+        public override double GetConfigPar() => WindVelocity;
         public override void SetSystemEnergyGen()
         {
-            EnergyGen = WindVelocity * Ratio;
+            EnergyGen = double.Round(Math.Pow(WindVelocity, 3) * Ratio, 2);
         }
     }
 }
