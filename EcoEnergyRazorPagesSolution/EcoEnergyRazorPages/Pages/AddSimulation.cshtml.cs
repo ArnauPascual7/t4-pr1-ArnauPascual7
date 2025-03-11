@@ -15,17 +15,19 @@ namespace EcoEnergyRazorPages.Pages
     {
         public string MsgFileError;
         public string MsgConfigParError;
+        public int? ConfigPar = null;
         [BindProperty]
         public Simulation NewSimulation { get; set; }
+        [BindProperty]
         public EnergySystem NewSystem { get; set; }
-        public List<SelectListItem> Systems { get; set; } =
-            Enum.GetValues(typeof(SystemType)).Cast<SystemType>().Select(v => new SelectListItem(v.ToString(), v.ToString())).ToList();
+        /*public List<SelectListItem> Systems { get; set; } =
+            Enum.GetValues(typeof(SystemType)).Cast<SystemType>().Select(v => new SelectListItem(v.ToString(), v.ToString())).ToList();*/
         public void OnGet()
         {
         }
         public IActionResult OnPost(string systemtype)
         {
-            Debug.WriteLine("Simulation System Type --> " + systemtype);
+            //Debug.WriteLine("?: System Type --> " + systemtype);
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -33,6 +35,7 @@ namespace EcoEnergyRazorPages.Pages
             string fileName = "simulacions_energia.csv";
             string filePath = @"ModelData\" + fileName;
             //Debug.WriteLine("Simulations CSV File Path --> " + Path.GetFullPath(filePath));
+            Debug.WriteLine("?: " + NewSimulation.ConfigPar);
             NewSimulation.SetSystemType(systemtype);
             if (!NewSimulation.ValidConfigPar())
             {
@@ -57,7 +60,7 @@ namespace EcoEnergyRazorPages.Pages
             Debug.WriteLine("?: New Simulation --> " + NewSimulation.ToString());
             if (SysIO.File.Exists(filePath))
             {
-                FilesHelper.WriteCsv(filePath, NewSimulation);
+                //FilesHelper.WriteCsv(filePath, NewSimulation);
                 /*var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
                     HasHeaderRecord = false
@@ -72,7 +75,7 @@ namespace EcoEnergyRazorPages.Pages
                 MsgFileError = "Error de càrrega de dades";
                 return Page();
             }
-            SysIO.File.AppendAllText(filePath, Environment.NewLine);
+            //SysIO.File.AppendAllText(filePath, Environment.NewLine);
             return RedirectToPage("Simulations");
         }
     }

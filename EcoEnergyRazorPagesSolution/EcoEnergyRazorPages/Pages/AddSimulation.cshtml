@@ -9,60 +9,16 @@
 	<div class="text-center"><h1 class="display-4">Afegir Simulació</h1></div>
 	<form action="" method="post">
 		<div class="form-group">
-			<select name="systemtype" asp-for="NewSimulation.SysType" @*asp-items="@Model.Systems"*@>
-				<option value="@Model.Systems[0]">Solar</option>
-				<option value="@Model.Systems[1]">Eòlic</option>
-				<option value="@Model.Systems[2]">Hidroelèctric</option>
+			<select id="systemtype" onchange="show()" @*asp-items="@Model.Systems"*@>
+				<option value="1">Solar</option>
+				<option value="2">Eòlic</option>
+				<option value="3">Hidroelèctric</option>
 			</select>
 		</div>
 		<div class="form-group">
-			@if (Model.Systems == 0)
-			{
-				<label asp-for="NewSimulation.ConfigPar">S</label>
-				<input class="form-control" asp-for="NewSimulation.ConfigPar" />
-				<span asp-validation-for="NewSimulation.ConfigPar" class="alert-dark"></span>
-			}
-			else if ((int)Model.NewSimulation.SysType == 1)
-			{
-				<label asp-for="NewSimulation.ConfigPar">W</label>
-				<input class="form-control" asp-for="NewSimulation.ConfigPar" />
-				<span asp-validation-for="NewSimulation.ConfigPar" class="alert-dark"></span>
-			}
-			else if ((int)Model.NewSimulation.SysType == 2)
-			{
-				<label asp-for="NewSimulation.ConfigPar">H</label>
-				<input class="form-control" asp-for="NewSimulation.ConfigPar" />
-				<span asp-validation-for="NewSimulation.ConfigPar" class="alert-dark"></span>
-			}
-		</div>
-		<div class="form-group">
-			<label asp-for="NewSystem.Ratio">Rati</label>
-			<input class="form-control" asp-for="NewSystem.Ratio" />
-			<span asp-validation-for="NewSystem.Ratio" class="alert-dark"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="NewSystem.KWHCost">Cost kWh</label>
-			<input class="form-control" asp-for="NewSystem.KWHCost" />
-			<span asp-validation-for="NewSystem.KWHCost" class="alert-dark"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="NewSystem.KWHPrice">Preu kWh</label>
-			<input class="form-control" asp-for="NewSystem.KWHPrice" />
-			<span asp-validation-for="NewSystem.KWHPrice" class="alert-dark"></span>
-		</div>
-		<button type="submit" class="btn btn-primary">Afegir</button>
-	</form>
-	<p>@Model.MsgFileError</p>
-</div>
-
-@*<div>
-	<div class="text-center"><h1 class="display-4">Afegir Simulació</h1></div>
-	<form action="" method="post">
-		<div class="form-group">
-			<select name="systemtype" asp-for="NewSimulation.SysType" asp-items="@Model.Systems"></select>
-		</div>
-		<div class="form-group">
-			<label asp-for="NewSimulation.ConfigPar">Paràmetre a configurar</label>
+			<label id="sunhours" asp-for="NewSimulation.ConfigPar">Hores de Sol</label>
+			<label id="windvelocity" asp-for="NewSimulation.ConfigPar" style="display:none;">Velocitat del Vent</label>
+			<label id="waterflow" asp-for="NewSimulation.ConfigPar" style="display:none;">Cabal d'aigua</label>
 			<input class="form-control" asp-for="NewSimulation.ConfigPar" />
 			<span asp-validation-for="NewSimulation.ConfigPar" class="alert-dark"></span>
 			<p>@Model.MsgConfigParError</p>
@@ -85,8 +41,29 @@
 		<button type="submit" class="btn btn-primary">Afegir</button>
 	</form>
 	<p>@Model.MsgFileError</p>
-</div>*@
+</div>
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
+	<script type="text/javascript">
+		function show() {
+			if ($("#systemtype :selected").val() == "1")
+			{
+				$("#sunhours").show();
+				$("#windvelocity").hide();
+				$("#waterflow").hide();
+			}
+			else if ($("#systemtype :selected").val() == "2") {
+				$("#sunhours").hide();
+				$("#windvelocity").show();
+				$("#waterflow").hide();
+			}
+			else
+			{
+				$("#sunhours").hide();
+				$("#windvelocity").hide();
+				$("#waterflow").show();
+			}
+		}
+	</script>
 }
