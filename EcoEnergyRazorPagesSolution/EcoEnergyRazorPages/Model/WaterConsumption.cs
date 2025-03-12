@@ -6,14 +6,18 @@ namespace EcoEnergyRazorPages.Model
     {
         public int Year { get; set; } = 2024; //DateTime.Now.Year
         [Required(ErrorMessage = "Aquest camp és obligatori")]
+        [Range(0, 9999999999, ErrorMessage = "El valor ha de ser major a 0")]
         public int RegionCode { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
         public string? RegionName { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
+        [Range(0, 9999999999, ErrorMessage = "El valor ha de ser major a 0")]
         public int Population { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
+        [Range(0, 9999999999, ErrorMessage = "El valor ha de ser major a 0")]
         public int DomesticNetwork { get; set; }
         [Required(ErrorMessage = "Aquest camp és obligatori")]
+        [Range(0, 9999999999, ErrorMessage = "El valor ha de ser major a 0")]
         public int EconomicActivitiesOwnSources { get; set; }
         public int Total { get; set; }
         public float HouseholdConsumptionPerCapita { get; set; }

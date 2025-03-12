@@ -33,20 +33,23 @@ namespace EcoEnergyRazorPages.Pages
                 try
                 {
                     XDocument xmlDoc = XDocument.Load(xmlFilePath);
-                    foreach (XElement element in xmlDoc.Root.Elements())
+                    if (xmlDoc.Root != null)
                     {
-                        WaterConsumption waterConsumption = new WaterConsumption
+                        foreach (XElement element in xmlDoc.Root.Elements())
                         {
-                            Year = int.Parse(element.Element("Year").Value),
-                            RegionCode = int.Parse(element.Element("CountyCode").Value),
-                            RegionName = element.Element("County").Value,
-                            Population = int.Parse(element.Element("Population").Value),
-                            DomesticNetwork = int.Parse(element.Element("DomesticNetwork").Value),
-                            EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources").Value),
-                            Total = int.Parse(element.Element("Total").Value),
-                            HouseholdConsumptionPerCapita = float.Parse(element.Element("HouseholdConsumptionPerCapita").Value)
-                        };
-                        WaterConsumptions.Add(waterConsumption);
+                            WaterConsumption waterConsumption = new WaterConsumption
+                            {
+                                Year = int.Parse(element.Element("Year")?.Value ?? "0"),
+                                RegionCode = int.Parse(element.Element("RegionCode")?.Value ?? "0"),
+                                RegionName = element.Element("RegionName")?.Value ?? string.Empty,
+                                Population = int.Parse(element.Element("Population")?.Value ?? "0"),
+                                DomesticNetwork = int.Parse(element.Element("DomesticNetwork")?.Value ?? "0"),
+                                EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources")?.Value ?? "0"),
+                                Total = int.Parse(element.Element("Total")?.Value ?? "0"),
+                                HouseholdConsumptionPerCapita = float.Parse(element.Element("HouseholdConsumptionPerCapita")?.Value ?? "0")
+                            };
+                            WaterConsumptions.Add(waterConsumption);
+                        }
                     }
                 }
                 catch (XmlException ex)
@@ -101,12 +104,7 @@ namespace EcoEnergyRazorPages.Pages
         }
         public static int CheckWaterConsumptionMostRecentYear(List<WaterConsumption> waterConsumptions)
         {
-            int year = 0;
-            foreach (WaterConsumption waterCons in waterConsumptions)
-            {
-                year = waterCons.Year > year ? waterCons.Year : year;
-            }
-            return year;
+            return waterConsumptions.Select(waterCons => waterCons.Year).Max();
         }
         public static List<WaterConsumption> CheckSusWaterConsumptionList(List<WaterConsumption> waterConsumptions, int digits)
         {
