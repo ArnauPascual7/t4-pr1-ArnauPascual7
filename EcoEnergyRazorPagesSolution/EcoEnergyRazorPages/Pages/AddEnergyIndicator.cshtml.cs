@@ -12,17 +12,19 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class AddEnergyIndicatorModel : PageModel
     {
-        public string MsgFileError;
+        const string MsgDataError = "Error de càrrega de dades";
+
+        public string? MsgFileError { get; set; }
         [BindProperty]
-        public EnergyIndicator NewEnergyIndicator { get; set; }
+        public EnergyIndicator? NewEnergyIndicator { get; set; }
         public void OnGet()
         {
-            string readFileName = "indicadors_energetics_defaultvalues.json";
-            string readFilePath = @"ModelData\" + readFileName;
+            const string ReadFileName = "indicadors_energetics_defaultvalues.json";
+            const string ReadFilePath = @"ModelData\" + ReadFileName;
 
-            if (SysIO.File.Exists(readFilePath))
+            if (SysIO.File.Exists(ReadFilePath))
             {
-                string defaultJson = SysIO.File.ReadAllText(readFilePath);
+                string defaultJson = SysIO.File.ReadAllText(ReadFilePath);
                 EnergyIndicator? deserializedJson = JsonSerializer.Deserialize<EnergyIndicator>(defaultJson);
 
                 if (deserializedJson != null)
@@ -31,26 +33,26 @@ namespace EcoEnergyRazorPages.Pages
                 }
                 else
                 {
-                    MsgFileError = "Error de càrrega de dades";
+                    MsgFileError = MsgDataError;
                 }
             }
             else
             {
-                MsgFileError = "Error de càrrega de dades";
+                MsgFileError = MsgDataError;
             }
         }
         public IActionResult OnPost()
         {
-            string writeFileName = "indicadors_energetics_cat.json";
-            string writeFilePath = @"ModelData\" + writeFileName;
+            const string WriteFileName = "indicadors_energetics_cat.json";
+            const string WriteFilePath = @"ModelData\" + WriteFileName;
 
-            if (SysIO.File.Exists(writeFilePath))
+            if (SysIO.File.Exists(WriteFilePath))
             {
-                FilesHelper.WriteJson(writeFilePath, NewEnergyIndicator);
+                FilesHelper.WriteJson(WriteFilePath, NewEnergyIndicator);
             }
             else
             {
-                MsgFileError = "Error de càrrega de dades";
+                MsgFileError = MsgDataError;
                 return Page();
             }
             return RedirectToPage("EnergyIndicators");

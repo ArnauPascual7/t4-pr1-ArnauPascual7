@@ -11,13 +11,14 @@ namespace EcoEnergyRazorPages.Model
             get => _ratio;
             set
             {
+                const string Msg = "El Rati ha d'estar entre 1 i 3";
                 if (value > 0 && value <= 3)
                 {
                     _ratio = value;
                 }
                 else
                 {
-                    throw new ArgumentException("El Rati ha d'estar entre 1 i 3");
+                    throw new ArgumentException(Msg);
                 }
             }
         }
@@ -27,8 +28,8 @@ namespace EcoEnergyRazorPages.Model
         public decimal TotalCost { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public EnergySystem() { }
-        public EnergySystem(double ratio, decimal kwhCost, decimal kwhPrice)
+        protected EnergySystem() { }
+        protected EnergySystem(double ratio, decimal kwhCost, decimal kwhPrice)
         {
             Ratio = ratio;
             KWHCost = kwhCost;

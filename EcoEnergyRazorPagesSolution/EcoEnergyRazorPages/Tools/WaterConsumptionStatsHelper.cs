@@ -76,8 +76,9 @@ namespace EcoEnergyRazorPages.Tools
         public static int CheckHigherRegionCode(List<WaterConsumption> waterConsumptions)
         {
             int regionCode = 0;
-            foreach (WaterConsumption waterCons in waterConsumptions)
+            for (int i = 0; i < waterConsumptions.Count; i++)
             {
+                WaterConsumption waterCons = waterConsumptions[i];
                 regionCode = waterCons.RegionCode > regionCode ? waterCons.RegionCode : regionCode;
             }
             return regionCode;

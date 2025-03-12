@@ -8,13 +8,14 @@
             get => _waterflow;
             private set
             {
+                const string Msg = "El Cabal d'aigua ha de ser Mínim 20";
                 if (value >= 20)
                 {
                     _waterflow = value;
                 }
                 else
                 {
-                    throw new ArgumentException("El Cabal d'aigua ha de ser Mínim 20");
+                    throw new ArgumentException(Msg);
                 }
             }
         }

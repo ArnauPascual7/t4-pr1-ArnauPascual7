@@ -11,20 +11,21 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class SimulationsModel : PageModel
     {
-        public string MsgFileError;
+        public string? MsgFileError { get; set; }
         public List<Simulation> Simulations { get; set; } = new List<Simulation>();
         public void OnGet()
         {
-            string fileName = "simulacions_energia.csv";
-            string filePath = @"ModelData\" + fileName;
+            const string MsgDataError = "Error de càrrega de dades";
+            const string FileName = "simulacions_energia.csv";
+            const string FilePath = @"ModelData\" + FileName;
 
-            if (SysIO.File.Exists(filePath))
+            if (SysIO.File.Exists(FilePath))
             {
-                Simulations = FilesHelper.ReadCsv<Simulation>(filePath);
+                Simulations = FilesHelper.ReadCsv<Simulation>(FilePath);
             }
             else
             {
-                MsgFileError = "Error en la càrrega de dades";
+                MsgFileError = MsgDataError;
             }
         }
     }

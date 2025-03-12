@@ -14,9 +14,7 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class WaterConsumptionModel : PageModel
     {
-        public const int NumCountMunicipalitiesWithMoreWater = 10;
-        public const int SusDigitsWaterConsumption = 6;
-        public string MsgFileError;
+        public string? MsgFileError { get; set; }
         public List<WaterConsumption> WaterConsumptions { get; set; } = new List<WaterConsumption>();
         public List<WaterConsumption> RegionsWithMoreWaterInLastYear { get; set; } = new List<WaterConsumption>();
         public List<WaterConsumption> AverageWaterConsumptionByRegion { get; set; } = new List<WaterConsumption>();
@@ -24,14 +22,18 @@ namespace EcoEnergyRazorPages.Pages
         public List<WaterConsumption> RegionsWithWaterConsumptionIncreasingTrendInLast5Years { get; set; } = new List<WaterConsumption>();
         public void OnGet()
         {
-            string csvFileName = "consum_aigua_cat_per_comarques.csv";
-            string xmlFileName = "consum_aigua_cat_per_comarques.xml";
-            string csvFilePath = @"ModelData\" + csvFileName;
-            string xmlFilePath = @"ModelData\" + xmlFileName;
-            if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(xmlFilePath))
+            const string MsgDataError = "Error de càrrega de dades";
+            const string CsvFileName = "consum_aigua_cat_per_comarques.csv";
+            const string XmlFileName = "consum_aigua_cat_per_comarques.xml";
+            const string CsvFilePath = @"ModelData\" + CsvFileName;
+            const string XmlFilePath = @"ModelData\" + XmlFileName;
+            const int NumCountRegionsWithMoreWater = 10;
+            const int SusDigitsWaterConsumption = 6;
+
+            if (SysIO.File.Exists(CsvFilePath) && SysIO.File.Exists(XmlFilePath))
             {
-                WaterConsumptions = FilesHelper.ReadCsv<WaterConsumption>(csvFilePath);
-                List<WaterConsumption> xmlWaterConsumptions = FilesHelper.ReadXMLWaterConsumption(xmlFilePath);
+                WaterConsumptions = FilesHelper.ReadCsv<WaterConsumption>(CsvFilePath);
+                List<WaterConsumption> xmlWaterConsumptions = FilesHelper.ReadXMLWaterConsumption(XmlFilePath);
 
                 if (xmlWaterConsumptions.Any())
                 {
@@ -42,9 +44,9 @@ namespace EcoEnergyRazorPages.Pages
                 RegionsWithMoreWaterInLastYear = Stats.CheckWaterConsumptionMostRecentYearList(WaterConsumptions);
                 RegionsWithMoreWaterInLastYear.Sort(new WaterConsumptionComparer().HouseholdConsumptionPerCapitaCompare);
                 RegionsWithMoreWaterInLastYear.Reverse();
-                if (RegionsWithMoreWaterInLastYear.Count >= NumCountMunicipalitiesWithMoreWater)
+                if (RegionsWithMoreWaterInLastYear.Count >= NumCountRegionsWithMoreWater)
                 {
-                    RegionsWithMoreWaterInLastYear.RemoveRange(NumCountMunicipalitiesWithMoreWater - 1, RegionsWithMoreWaterInLastYear.Count - NumCountMunicipalitiesWithMoreWater);
+                    RegionsWithMoreWaterInLastYear.RemoveRange(NumCountRegionsWithMoreWater - 1, RegionsWithMoreWaterInLastYear.Count - NumCountRegionsWithMoreWater);
                 }
 
                 AverageWaterConsumptionByRegion = WaterConsumptions
@@ -67,7 +69,7 @@ namespace EcoEnergyRazorPages.Pages
             }
             else
             {
-                MsgFileError = "Error en la càrrega de dades";
+                MsgFileError = MsgDataError;
             }
         }
     }

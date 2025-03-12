@@ -10,7 +10,7 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class EnergyIndicatorsModel : PageModel
     {
-        public string MsgFileError;
+        public string? MsgFileError { get; set; }
         public List<EnergyIndicator> EnergyIndicators { get; set; } = new List<EnergyIndicator>();
         public List<EnergyIndicator> NetProductionIndicators { get; set; } = new List<EnergyIndicator>();
         public List<EnergyIndicator> GasolineConsumptionIndicators { get; set; } = new List<EnergyIndicator>();
@@ -18,15 +18,20 @@ namespace EcoEnergyRazorPages.Pages
         public List<EnergyIndicator> ElectricalDemandAvailableProductionIndicators { get; set; } = new List<EnergyIndicator>();
         public void OnGet()
         {
-            string csvFileName = "indicadors_energetics_cat.csv";
-            string jsonFileName = "indicadors_energetics_cat.json";
-            string csvFilePath = @"ModelData\" + csvFileName;
-            string jsonFilePath = @"ModelData\" + jsonFileName;
+            const string MsgDataError = "Error de càrrega de dades";
+            const string CsvFileName = "indicadors_energetics_cat.csv";
+            const string JsonFileName = "indicadors_energetics_cat.json";
+            const string CsvFilePath = @"ModelData\" + CsvFileName;
+            const string JsonFilePath = @"ModelData\" + JsonFileName;
+            const int MinNetProduction = 3000;
+            const int MinGasolineConsumption = 100;
+            const int MinElectricalDemand = 4000;
+            const int MaxAvailableProduction = 3000;
 
-            if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(jsonFilePath))
+            if (SysIO.File.Exists(CsvFilePath) && SysIO.File.Exists(JsonFilePath))
             {
-                EnergyIndicators = FilesHelper.ReadCsv<EnergyIndicator>(csvFilePath);
-                List<EnergyIndicator> jsonEnergyIndicators = FilesHelper.ReadJsonList<EnergyIndicator>(jsonFilePath);
+                EnergyIndicators = FilesHelper.ReadCsv<EnergyIndicator>(CsvFilePath);
+                List<EnergyIndicator> jsonEnergyIndicators = FilesHelper.ReadJsonList<EnergyIndicator>(JsonFilePath);
 
                 if (jsonEnergyIndicators.Any())
                 {
@@ -35,13 +40,13 @@ namespace EcoEnergyRazorPages.Pages
                 EnergyIndicators.Sort();
 
                 NetProductionIndicators = EnergyIndicators
-                    .Where(indicator => indicator.CDEEBC_ProdNeta > 3000)
+                    .Where(indicator => indicator.CDEEBC_ProdNeta > MinNetProduction)
                     .Select(indicator => indicator)
                     .OrderBy(indicator => indicator.CDEEBC_ProdNeta)
                     .ToList();
 
                 GasolineConsumptionIndicators = EnergyIndicators
-                    .Where(indicator => indicator.CCAC_GasolinaAuto > 100)
+                    .Where(indicator => indicator.CCAC_GasolinaAuto > MinGasolineConsumption)
                     .Select(indicator => indicator)
                     .OrderByDescending(indicator => indicator.CCAC_GasolinaAuto)
                     .ToList();
@@ -53,13 +58,13 @@ namespace EcoEnergyRazorPages.Pages
                     .ToList();
 
                 ElectricalDemandAvailableProductionIndicators = EnergyIndicators
-                    .Where(indicator => indicator.CDEEBC_DemandaElectr > 4000 && indicator.CDEEBC_ProdDisp < 3000)
+                    .Where(indicator => indicator.CDEEBC_DemandaElectr > MinElectricalDemand && indicator.CDEEBC_ProdDisp < MaxAvailableProduction)
                     .Select(indicator => indicator)
                     .ToList();
             }
             else
             {
-                MsgFileError = "Error en la càrrega de dades";
+                MsgFileError = MsgDataError;
             }
         }
     }

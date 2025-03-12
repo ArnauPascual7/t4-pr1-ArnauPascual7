@@ -10,30 +10,37 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class AddWaterConsumptionModel : PageModel
     {
-        public string MsgFileError;
+        public string? MsgFileError { get; set; }
         [BindProperty]
-        public WaterConsumption NewWaterConsumption { get; set; }
-        public void OnGet()
-        {
-        }
+        public WaterConsumption? NewWaterConsumption { get; set; }
         public IActionResult OnPost()
         {
+            const string MsgDataError = "Error de càrrega de dades";
+            const string FileName = "consum_aigua_cat_per_comarques.xml";
+            const string FilePath = @"ModelData\" + FileName;
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            NewWaterConsumption.SetWaterConsumptionCalculation();
 
-            string fileName = "consum_aigua_cat_per_comarques.xml";
-            string filePath = @"ModelData\" + fileName;
-
-            if (SysIO.File.Exists(filePath))
+            if (NewWaterConsumption != null)
             {
-                FilesHelper.WriteXMLWaterConsumption(filePath, NewWaterConsumption);
+                NewWaterConsumption.SetWaterConsumptionCalculation();
             }
             else
             {
-                MsgFileError = "Error de càrrega de dades";
+                MsgFileError = MsgDataError;
+                return Page();
+            }
+
+            if (SysIO.File.Exists(FilePath))
+            {
+                FilesHelper.WriteXMLWaterConsumption(FilePath, NewWaterConsumption);
+            }
+            else
+            {
+                MsgFileError = MsgDataError;
                 return Page();
             }
             return RedirectToPage("WaterConsumption");
