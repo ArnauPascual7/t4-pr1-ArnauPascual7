@@ -2,8 +2,8 @@
 <registers>
 	<reg>
 		<Year>2023</Year>
-		<CountyCode>44</CountyCode>
-		<County>a</County>
+		<RegionCode>44</RegionCode>
+		<RegionName>a</RegionName>
 		<Population>2</Population>
 		<DomesticNetwork>2</DomesticNetwork>
 		<EconomicActivitiesOwnSources>2</EconomicActivitiesOwnSources>
@@ -12,8 +12,8 @@
 	</reg>
 	<reg>
 		<Year>2022</Year>
-		<CountyCode>44</CountyCode>
-		<County>a</County>
+		<RegionCode>44</RegionCode>
+		<RegionName>a</RegionName>
 		<Population>2</Population>
 		<DomesticNetwork>2</DomesticNetwork>
 		<EconomicActivitiesOwnSources>2</EconomicActivitiesOwnSources>
@@ -22,8 +22,8 @@
 	</reg>
 	<reg>
 		<Year>2021</Year>
-		<CountyCode>44</CountyCode>
-		<County>a</County>
+		<RegionCode>44</RegionCode>
+		<RegionName>a</RegionName>
 		<Population>2</Population>
 		<DomesticNetwork>2</DomesticNetwork>
 		<EconomicActivitiesOwnSources>2</EconomicActivitiesOwnSources>
@@ -32,8 +32,8 @@
 	</reg>
 	<reg>
 		<Year>2020</Year>
-		<CountyCode>44</CountyCode>
-		<County>a</County>
+		<RegionCode>44</RegionCode>
+		<RegionName>a</RegionName>
 		<Population>2</Population>
 		<DomesticNetwork>2</DomesticNetwork>
 		<EconomicActivitiesOwnSources>2</EconomicActivitiesOwnSources>
@@ -42,8 +42,8 @@
 	</reg>
 	<reg>
 		<Year>2019</Year>
-		<CountyCode>44</CountyCode>
-		<County>a</County>
+		<RegionCode>44</RegionCode>
+		<RegionName>a</RegionName>
 		<Population>2</Population>
 		<DomesticNetwork>2</DomesticNetwork>
 		<EconomicActivitiesOwnSources>2</EconomicActivitiesOwnSources>
