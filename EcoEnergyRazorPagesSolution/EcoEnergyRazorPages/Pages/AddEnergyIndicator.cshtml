@@ -6,6 +6,7 @@
 
 <div>
 	<div class="text-center"><h1 class="display-4">Afegir Indicador d'energia</h1></div>
+	<p>@Model.MsgFileError</p>
 	<form action="" method="post">
 		<div class="form-group">
 			<label asp-for="NewEnergyIndicator.Data" class="form-label">Data</label>
@@ -34,7 +35,6 @@
 		</div>
 		<button type="submit" class="btn btn-primary">Afegir</button>
 	</form>
-	<p>@Model.MsgFileError</p>
 </div>
 
 @section Scripts {

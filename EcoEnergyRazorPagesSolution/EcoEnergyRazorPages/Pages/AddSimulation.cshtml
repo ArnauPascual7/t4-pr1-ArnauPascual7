@@ -6,6 +6,7 @@
 
 <div>
 	<div class="text-center"><h1 class="display-4">Afegir Simulació</h1></div>
+	<p>@Model.MsgFileError</p>
 	<form action="" method="post">
 		<div class="form-group">
 			<select id="systemtype" name="systemtype" onchange="show()">
@@ -38,7 +39,6 @@
 		</div>
 		<button type="submit" class="btn btn-primary">Afegir</button>
 	</form>
-	<p>@Model.MsgFileError</p>
 </div>
 
 @section Scripts {

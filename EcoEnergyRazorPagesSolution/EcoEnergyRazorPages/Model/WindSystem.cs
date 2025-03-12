@@ -8,13 +8,14 @@
             get => _windvelocity;
             private set
             {
+                const string Msg = "La Velocitat del Vent ha de ser Mínim de 5";
                 if (value >= 5)
                 {
                     _windvelocity = value;
                 }
                 else
                 {
-                    throw new ArgumentException("La Velocitat del Vent ha de ser Mínim de 5");
+                    throw new ArgumentException(Msg);
                 }
             }
         }

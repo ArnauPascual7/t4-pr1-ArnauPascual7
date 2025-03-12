@@ -14,12 +14,17 @@ namespace EcoEnergyRazorPages.Pages
 {
     public class AddSimulationModel : PageModel
     {
-        public string MsgFileError;
-        public string MsgParError;
-        public string MsgRatioError;
+        public string? MsgFileError { get; set; }
+        public string? MsgParError { get; set; }
+        public string? MsgRatioError { get; set; }
         public EnergySystem NewSystem { get; set; } = new SolarSystem();
         public IActionResult OnPost(string systemtype, double configpar, double ratio, decimal cost, decimal price)
         {
+            const string MsgSelectedSystemError = "Error: El sistema seleccionat és erroni";
+            const string MsgDataError = "Error de càrrega de dades";
+            const string FileName = "simulacions_energia.csv";
+            const string FilePath = @"ModelData\" + FileName;
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -36,7 +41,7 @@ namespace EcoEnergyRazorPages.Pages
                     NewSystem = new HydroelectricSystem();
                     break;
                 default:
-                    MsgParError = "Error: El sistema seleccionat és erroni";
+                    MsgParError = MsgSelectedSystemError;
                     return Page();
             }
             Debug.WriteLine("?: New System --> " + NewSystem.GetType());
@@ -65,10 +70,7 @@ namespace EcoEnergyRazorPages.Pages
             NewSystem.KWHPrice = price;
             NewSystem.SetSystemCalculations();
 
-            string fileName = "simulacions_energia.csv";
-            string filePath = @"ModelData\" + fileName;
-
-            if (SysIO.File.Exists(filePath))
+            if (SysIO.File.Exists(FilePath))
             {
                 SystemType sysType;
                 if (NewSystem.GetType() == typeof(SolarSystem))
@@ -88,7 +90,7 @@ namespace EcoEnergyRazorPages.Pages
                     sysType = 0;
                 }
 
-                FilesHelper.WriteCsv(filePath, new Simulation
+                FilesHelper.WriteCsv(FilePath, new Simulation
                 {
                     SysType = sysType,
                     ConfigPar = NewSystem.GetConfigPar(),
@@ -102,10 +104,10 @@ namespace EcoEnergyRazorPages.Pages
             }
             else
             {
-                MsgFileError = "Error de càrrega de dades";
+                MsgFileError = MsgDataError;
                 return Page();
             }
-            SysIO.File.AppendAllText(filePath, Environment.NewLine);
+            SysIO.File.AppendAllText(FilePath, Environment.NewLine);
             return RedirectToPage("Simulations");
         }
     }
