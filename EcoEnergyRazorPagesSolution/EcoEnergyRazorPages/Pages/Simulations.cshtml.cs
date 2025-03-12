@@ -17,13 +17,10 @@ namespace EcoEnergyRazorPages.Pages
         {
             string fileName = "simulacions_energia.csv";
             string filePath = @"ModelData\" + fileName;
-            //Debug.WriteLine("Simulations CSV File Path --> " + Path.GetFullPath(filePath));
+
             if (SysIO.File.Exists(filePath))
             {
                 Simulations = FilesHelper.ReadCsv<Simulation>(filePath);
-                /*using var reader = new StreamReader(filePath);
-                using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-                Simulations = csv.GetRecords<Simulation>().ToList();*/
             }
             else
             {

@@ -17,9 +17,6 @@ namespace EcoEnergyRazorPages.Pages
         public string MsgFileError;
         public string MsgParError;
         public string MsgRatioError;
-        public int? ConfigPar = null;
-        [BindProperty]
-        public Simulation? Simulation { get; set; }
         public EnergySystem NewSystem { get; set; } = new SolarSystem();
         public IActionResult OnPost(string systemtype, double configpar, double ratio, decimal cost, decimal price)
         {
@@ -55,7 +52,7 @@ namespace EcoEnergyRazorPages.Pages
             }
 
             try
-            { 
+            {
                 NewSystem.Ratio = ratio;
             }
             catch (System.Exception ex)
@@ -73,11 +70,27 @@ namespace EcoEnergyRazorPages.Pages
 
             if (SysIO.File.Exists(filePath))
             {
+                SystemType sysType;
+                if (NewSystem.GetType() == typeof(SolarSystem))
+                {
+                    sysType = SystemType.SolarSystem;
+                }
+                else if (NewSystem.GetType() == typeof(WindSystem))
+                {
+                    sysType = SystemType.WindSystem;
+                }
+                else if (NewSystem.GetType() == typeof(HydroelectricSystem))
+                {
+                    sysType = SystemType.HydroelectricSystem;
+                }
+                else
+                {
+                    sysType = 0;
+                }
+
                 FilesHelper.WriteCsv(filePath, new Simulation
                 {
-                    SysType = NewSystem.GetType() == typeof(SolarSystem) ? SystemType.SolarSystem
-                    : NewSystem.GetType() == typeof(WindSystem) ? SystemType.WindSystem
-                    : NewSystem.GetType() == typeof(HydroelectricSystem) ? SystemType.HydroelectricSystem : 0,
+                    SysType = sysType,
                     ConfigPar = NewSystem.GetConfigPar(),
                     Ratio = NewSystem.Ratio,
                     EnergyGen = NewSystem.EnergyGen,

@@ -22,27 +22,14 @@ namespace EcoEnergyRazorPages.Pages
             {
                 return Page();
             }
+            NewWaterConsumption.SetWaterConsumptionCalculation();
+
             string fileName = "consum_aigua_cat_per_comarques.xml";
             string filePath = @"ModelData\" + fileName;
-            NewWaterConsumption.SetWaterConsumptionCalculation();
+
             if (SysIO.File.Exists(filePath))
             {
-                XDocument xmlDoc = XDocument.Load(filePath);
-                XElement root = xmlDoc.Root;
-                XDocument newXmlDoc = new XDocument(
-                    new XElement("reg", 
-                        new XElement("Year", NewWaterConsumption.Year),
-                        new XElement("RegionCode", NewWaterConsumption.RegionCode),
-                        new XElement("RegionName", NewWaterConsumption.RegionName),
-                        new XElement("Population", NewWaterConsumption.Population),
-                        new XElement("DomesticNetwork", NewWaterConsumption.DomesticNetwork),
-                        new XElement("EconomicActivitiesOwnSources", NewWaterConsumption.EconomicActivitiesOwnSources),
-                        new XElement("Total", NewWaterConsumption.Total),
-                        new XElement("HouseholdConsumptionPerCapita", NewWaterConsumption.HouseholdConsumptionPerCapita)
-                        )
-                    );
-                root.Add(newXmlDoc.Root);
-                xmlDoc.Save(filePath);
+                FilesHelper.WriteXMLWaterConsumption(filePath, NewWaterConsumption);
             }
             else
             {

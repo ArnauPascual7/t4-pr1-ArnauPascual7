@@ -25,17 +25,12 @@ namespace EcoEnergyRazorPages.Pages
 
             if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(jsonFilePath))
             {
-                string json = SysIO.File.ReadAllText(jsonFilePath);
                 EnergyIndicators = FilesHelper.ReadCsv<EnergyIndicator>(csvFilePath);
+                List<EnergyIndicator> jsonEnergyIndicators = FilesHelper.ReadJsonList<EnergyIndicator>(jsonFilePath);
 
-                if (json != null && json != "")
+                if (jsonEnergyIndicators.Any())
                 {
-                    var jsonIndicators = JsonSerializer.Deserialize<List<EnergyIndicator>>(json);
-
-                    if (jsonIndicators != null)
-                    {
-                        EnergyIndicators.AddRange(jsonIndicators);
-                    }
+                    EnergyIndicators.AddRange(jsonEnergyIndicators);
                 }
                 EnergyIndicators.Sort();
 

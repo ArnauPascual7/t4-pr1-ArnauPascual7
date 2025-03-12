@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Text.Json;
 using EcoEnergyRazorPages.Model;
+using EcoEnergyRazorPages.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Win32;
@@ -45,22 +46,7 @@ namespace EcoEnergyRazorPages.Pages
 
             if (SysIO.File.Exists(writeFilePath))
             {
-                string existingJson = SysIO.File.ReadAllText(writeFilePath);
-                List<EnergyIndicator> registers;
-
-                if (!string.IsNullOrEmpty(existingJson))
-                {
-                    registers = JsonSerializer.Deserialize<List<EnergyIndicator>>(existingJson) ?? new List<EnergyIndicator>();
-                }
-                else
-                {
-                    registers = new List<EnergyIndicator>();
-                }
-                registers.Add(NewEnergyIndicator);
-
-                string newJson = JsonSerializer.Serialize(registers);
-
-                SysIO.File.WriteAllText(writeFilePath, newJson);
+                FilesHelper.WriteJson(writeFilePath, NewEnergyIndicator);
             }
             else
             {
