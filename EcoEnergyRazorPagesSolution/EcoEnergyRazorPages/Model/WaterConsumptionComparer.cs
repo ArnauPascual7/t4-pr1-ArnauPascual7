@@ -10,7 +10,7 @@
             return x.RegionCode.CompareTo(y.RegionCode);
         }
 
-        public int YearRegionCompare(WaterConsumption x, WaterConsumption y)
+        public int YearRegionCompare(WaterConsumption? x, WaterConsumption? y)
         {
             int yearComparison = x.Year.CompareTo(y.Year);
             if (yearComparison != 0) return yearComparison > 0 ? -1 : 1;

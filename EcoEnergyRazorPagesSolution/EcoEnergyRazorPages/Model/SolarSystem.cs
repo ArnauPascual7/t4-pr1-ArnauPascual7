@@ -9,7 +9,7 @@
             private set
             {
                 const string Msg = "Les Hores de Sol han de ser Majors a 1";
-                if (value < 1)
+                if (value <= 1)
                 {
                     throw new ArgumentException(Msg);
                 }
