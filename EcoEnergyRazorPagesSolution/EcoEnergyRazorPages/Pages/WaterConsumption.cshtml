@@ -39,7 +39,7 @@
 		<p>Quantitat de registres: @Model.WaterConsumptions.Count()</p>
 		<h3>Estadísitiques</h3>
 		<h4>Municipis amb més consum d'aigua en l'any més recent</h4>
-		@if (Model.MunicipalitiesWithMoreWaterInLastYear.Any())
+		@if (Model.RegionsWithMoreWaterInLastYear.Any())
 		{
 			<table class="table">
 				<thead>
@@ -51,7 +51,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var water in Model.MunicipalitiesWithMoreWaterInLastYear)
+					@foreach (var water in Model.RegionsWithMoreWaterInLastYear)
 					{
 						<tr>
 							<td>@water.Year</td>
@@ -71,7 +71,7 @@
 		{
 			<p>No hi ha registres</p>
 		}
-		<p>Quantitat de registres: @Model.MunicipalitiesWithMoreWaterInLastYear.Count()</p>
+		<p>Quantitat de registres: @Model.RegionsWithMoreWaterInLastYear.Count()</p>
 		<h4>Consum mitja d'aigua per comarca</h4>
 		@if (Model.AverageWaterConsumptionByRegion.Any())
 		{
@@ -135,7 +135,7 @@
 			<p>No hi ha registres</p>
 		}
 		<h4>Municipis amb un augment del consum d'aigua en els últims 5 anys</h4>
-		@if (Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Any())
+		@if (Model.RegionsWithWaterConsumptionIncreasingTrendInLast5Years.Any())
 		{
 			<table class="table">
 				<thead>
@@ -145,7 +145,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var water in Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years)
+					@foreach (var water in Model.RegionsWithWaterConsumptionIncreasingTrendInLast5Years)
 					{
 						<tr>
 							<td>@water.RegionCode</td>
@@ -154,7 +154,7 @@
 					}
 				</tbody>
 			</table>
-			<p>Quantitat de registres: @Model.MunicipalitiesWithWaterConsumptionIncreasingTrendInLast5Years.Count()</p>
+			<p>Quantitat de registres: @Model.RegionsWithWaterConsumptionIncreasingTrendInLast5Years.Count()</p>
 		}
 		else
 		{
