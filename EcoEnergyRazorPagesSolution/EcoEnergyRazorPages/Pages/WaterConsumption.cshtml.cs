@@ -30,31 +30,11 @@ namespace EcoEnergyRazorPages.Pages
             if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(xmlFilePath))
             {
                 WaterConsumptions = FilesHelper.ReadCsv<WaterConsumption>(csvFilePath);
-                try
+                List<WaterConsumption> xmlWaterConsumptions = FilesHelper.ReadXMLWaterConsumption(xmlFilePath);
+
+                if (xmlWaterConsumptions.Any())
                 {
-                    XDocument xmlDoc = XDocument.Load(xmlFilePath);
-                    if (xmlDoc.Root != null)
-                    {
-                        foreach (XElement element in xmlDoc.Root.Elements())
-                        {
-                            WaterConsumption waterConsumption = new WaterConsumption
-                            {
-                                Year = int.Parse(element.Element("Year")?.Value ?? "0"),
-                                RegionCode = int.Parse(element.Element("RegionCode")?.Value ?? "0"),
-                                RegionName = element.Element("RegionName")?.Value ?? string.Empty,
-                                Population = int.Parse(element.Element("Population")?.Value ?? "0"),
-                                DomesticNetwork = int.Parse(element.Element("DomesticNetwork")?.Value ?? "0"),
-                                EconomicActivitiesOwnSources = int.Parse(element.Element("EconomicActivitiesOwnSources")?.Value ?? "0"),
-                                Total = int.Parse(element.Element("Total")?.Value ?? "0"),
-                                HouseholdConsumptionPerCapita = float.Parse(element.Element("HouseholdConsumptionPerCapita")?.Value ?? "0")
-                            };
-                            WaterConsumptions.Add(waterConsumption);
-                        }
-                    }
-                }
-                catch (XmlException ex)
-                {
-                    Debug.WriteLine($"?: Error en la lectura del fitxer XML: {ex}");
+                    WaterConsumptions.AddRange(xmlWaterConsumptions);
                 }
                 WaterConsumptions.Sort(new WaterConsumptionComparer().YearRegionCompare);
 
