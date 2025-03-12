@@ -22,30 +22,41 @@ namespace EcoEnergyRazorPages.Pages
             string jsonFileName = "indicadors_energetics_cat.json";
             string csvFilePath = @"ModelData\" + csvFileName;
             string jsonFilePath = @"ModelData\" + jsonFileName;
+
             if (SysIO.File.Exists(csvFilePath) && SysIO.File.Exists(jsonFilePath))
             {
                 string json = SysIO.File.ReadAllText(jsonFilePath);
                 EnergyIndicators = FilesHelper.ReadCsv<EnergyIndicator>(csvFilePath);
+
                 if (json != null && json != "")
                 {
-                    EnergyIndicators.AddRange(JsonSerializer.Deserialize<List<EnergyIndicator>>(json));
+                    var jsonIndicators = JsonSerializer.Deserialize<List<EnergyIndicator>>(json);
+
+                    if (jsonIndicators != null)
+                    {
+                        EnergyIndicators.AddRange(jsonIndicators);
+                    }
                 }
                 EnergyIndicators.Sort();
+
                 NetProductionIndicators = EnergyIndicators
                     .Where(indicator => indicator.CDEEBC_ProdNeta > 3000)
                     .Select(indicator => indicator)
                     .OrderBy(indicator => indicator.CDEEBC_ProdNeta)
                     .ToList();
+
                 GasolineConsumptionIndicators = EnergyIndicators
-                    .Where(indicator => indicator.CDEEBC_ConsumAux > 100)
+                    .Where(indicator => indicator.CCAC_GasolinaAuto > 100)
                     .Select(indicator => indicator)
-                    .OrderByDescending(indicator => indicator.CDEEBC_ConsumAux)
+                    .OrderByDescending(indicator => indicator.CCAC_GasolinaAuto)
                     .ToList();
+
                 AverageNetProductionForEachYearIndicators = EnergyIndicators
                     .GroupBy(indicator => indicator.Data.Year)
                     .ToDictionary(g => g.Key, g => g.Average(indicator => indicator.CDEEBC_ProdNeta))
                     .OrderBy(g => g.Key)
                     .ToList();
+
                 ElectricalDemandAvailableProductionIndicators = EnergyIndicators
                     .Where(indicator => indicator.CDEEBC_DemandaElectr > 4000 && indicator.CDEEBC_ProdDisp < 3000)
                     .Select(indicator => indicator)

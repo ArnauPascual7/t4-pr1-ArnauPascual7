@@ -54,6 +54,10 @@ namespace EcoEnergyRazorPages.Model
         public float CCAC_GasolinaAuto { get; set; }
         public float CCAC_GasoilA { get; set; }
 
+        public string GetDateMonthYearOnly()
+        {
+            return Data.ToString("MM/yyyy");
+        }
         public int CompareTo(EnergyIndicator? other)
         {
             if (other == null) return 1;

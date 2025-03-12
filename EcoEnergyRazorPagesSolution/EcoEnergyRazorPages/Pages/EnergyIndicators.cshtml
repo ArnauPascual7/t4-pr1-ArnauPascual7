@@ -29,7 +29,7 @@
 				@foreach (var indicator in Model.EnergyIndicators)
 				{
 					<tr>
-						<td>@indicator.Data</td>
+						<td>@indicator.GetDateMonthYearOnly()</td>
 						<td>@indicator.PBEE_Hidroelectr</td>
 						<td>@indicator.PBEE_Carbo</td>
 						<td>@indicator.PBEE_GasNat</td>
@@ -73,7 +73,7 @@
 				}
 			</tbody>
 		</table>
-		<p>Quantitat de registres: @Model.EnergyIndicators.Count()</p>
+		<p>Quantitat de registres: @Model.EnergyIndicators.Count</p>
 		<h3>Estadísitiques</h3>
 		<h4>Registres amb producció neta superior a 3000</h4>
 		<table class="table">
@@ -89,7 +89,7 @@
 				@foreach (var indicator in Model.NetProductionIndicators)
 				{
 					<tr>
-						<td>@indicator.Data</td>
+						<td>@indicator.GetDateMonthYearOnly()</td>
 						<td>@indicator.PBEE_Hidroelectr</td>
 						<td>@indicator.PBEE_Carbo</td>
 						<td>@indicator.PBEE_GasNat</td>
@@ -133,7 +133,7 @@
 				}
 			</tbody>
 		</table>
-		<p>Quantitat de registres: @Model.NetProductionIndicators.Count()</p>
+		<p>Quantitat de registres: @Model.NetProductionIndicators.Count</p>
 		<h4>Mitjana de producció neta de cada any</h4>
 		<table class="table">
 			<thead>
@@ -152,7 +152,7 @@
 				}
 			</tbody>
 		</table>
-		<p>Quantitat de registres: @Model.AverageNetProductionForEachYearIndicators.Count()</p>
+		<p>Quantitat de registres: @Model.AverageNetProductionForEachYearIndicators.Count</p>
 		<h4>Registres amb consum de gasolina superior a 100</h4>
 		<table class="table">
 			<thead>
@@ -167,7 +167,7 @@
 				@foreach (var indicator in Model.GasolineConsumptionIndicators)
 				{
 					<tr>
-						<td>@indicator.Data</td>
+						<td>@indicator.GetDateMonthYearOnly()</td>
 						<td>@indicator.PBEE_Hidroelectr</td>
 						<td>@indicator.PBEE_Carbo</td>
 						<td>@indicator.PBEE_GasNat</td>
@@ -211,7 +211,7 @@
 				}
 			</tbody>
 		</table>
-		<p>Quantitat de registres: @Model.GasolineConsumptionIndicators.Count()</p>
+		<p>Quantitat de registres: @Model.GasolineConsumptionIndicators.Count</p>
 		<h4>Registres amb demanda elèctrica superior a 4000 i producció disponible inferior a 3000</h4>
 		<table class="table">
 			<thead>
@@ -226,7 +226,7 @@
 				@foreach (var indicator in Model.ElectricalDemandAvailableProductionIndicators)
 				{
 					<tr>
-						<td>@indicator.Data</td>
+						<td>@indicator.GetDateMonthYearOnly()</td>
 						<td>@indicator.PBEE_Hidroelectr</td>
 						<td>@indicator.PBEE_Carbo</td>
 						<td>@indicator.PBEE_GasNat</td>
@@ -270,7 +270,7 @@
 				}
 			</tbody>
 		</table>
-		<p>Quantitat de registres: @Model.ElectricalDemandAvailableProductionIndicators.Count()</p>
+		<p>Quantitat de registres: @Model.ElectricalDemandAvailableProductionIndicators.Count</p>
 	}
 	else
 	{
