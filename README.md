@@ -16,7 +16,7 @@ La Solució està formada per dos projectes, el projecte principal de [RazorPage
 
 [Tools](EcoEnergyRazorPagesSolution/EcoEnergyRazorPages/Tools): Aquest directori conté dues helper classes amb funcionalitats per a ajudar en el maneig de fitxer, llegir i escriure, i les funcionalitats per a poder fer les estadísitiques als consums d'aigua.
 
-De forma predeterminada hi ha el directori [Pages](EcoEnergyRazorPagesSolution/EcoEnergyRazorPages/Pages), aquest conté totes les pàgina de la web. Dins d'aquest també hi ha les pàgines creades per mí sobre Simulacions, Consums d'aigua i Indicadors energètics, a més de les seves pàgines corresponents per a afegir registres.
+De forma predeterminada hi ha el directori [Pages](EcoEnergyRazorPagesSolution/EcoEnergyRazorPages/Pages), aquest conté totes les pàgina de la web. Dins d'aquest també hi ha les pàgines creades per mí sobre Simulacions, Consums d'aigua i Indicadors energètics, a més de les seves pàgines corresponents per a afegir registres. També dins del direcotir [wwwroot](EcoEnergyRazorPagesSolution/EcoEnergyRazorPages/wwwroot/images) hi ha una carpeta images que conté les imatges utilitzades en la web.
 
 ## [Testing de la solució](EcoEnergyRazorPagesSolution/xUnitTestProject)
 
